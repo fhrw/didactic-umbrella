@@ -28,3 +28,13 @@ func CreateStudent(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": student})
 
 }
+
+func GetAllStudents(c *gin.Context) {
+
+	var students []models.Student
+
+	models.DB.Find(&students)
+
+	c.JSON(http.StatusOK, gin.H{"data": students})
+
+}
