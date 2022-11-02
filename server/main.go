@@ -21,5 +21,9 @@ func main() {
 	router.GET("/constraints", controllers.GetAllConstraints)
 	router.DELETE("/constraints/:constraint_id", controllers.DeleteSingleConstraint)
 
+	router.POST("/history", controllers.CreateHistory)
+	router.GET("/history", controllers.GetAllHistory)
+	router.DELETE("/history", controllers.DeleteSingleHistory)
+
 	router.Run("localhost:3000")
 }
