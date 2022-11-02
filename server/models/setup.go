@@ -15,7 +15,9 @@ func ConnectDatabase() {
 	}
 
 	db.AutoMigrate(&Student{})
+	db.AutoMigrate(&Teacher{})
 	db.AutoMigrate(&Constraint{})
+	db.AutoMigrate(&History{})
 
 	DB = db
 

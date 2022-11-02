@@ -17,12 +17,14 @@ func main() {
 	router.PATCH("/students/:student_id", controllers.UpdateStudent)
 	router.DELETE("/students/:student_id", controllers.DeleteSingleStudent)
 
+	router.POST("/teacher", controllers.CreateTeacher)
+
 	router.POST("/constraints", controllers.CreateConstraint)
 	router.GET("/constraints", controllers.GetAllConstraints)
 	router.DELETE("/constraints/:constraint_id", controllers.DeleteSingleConstraint)
 
 	router.POST("/history", controllers.CreateHistory)
-	router.GET("/history", controllers.GetAllHistory)
+	router.GET("/history/:history_id", controllers.GetAllHistory)
 	router.DELETE("/history", controllers.DeleteSingleHistory)
 
 	router.Run("localhost:3000")
