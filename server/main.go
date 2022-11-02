@@ -17,5 +17,9 @@ func main() {
 	router.PATCH("/students/:student_id", controllers.UpdateStudent)
 	router.DELETE("/students/:student_id", controllers.DeleteSingleStudent)
 
+	router.POST("/constraints", controllers.CreateConstraint)
+	router.GET("/constraints", controllers.GetAllConstraints)
+	router.DELETE("/constraints/:constraint_id", controllers.DeleteSingleConstraint)
+
 	router.Run("localhost:3000")
 }
