@@ -19,12 +19,18 @@ func CalculateTimetable(c *gin.Context) {
 	var students []models.Student
 	models.DB.Where(map[string]interface{}{"Teacher_id": teacherId}).Find(&students)
 
-	allConstraints := []models.Constraint{}
+	var allConstraints []models.Constraint
+	var history []models.History
 	for _, student := range students {
 		var constraints []models.Constraint
 		models.DB.Where(map[string]interface{}{"Student_id": student.Student_id, "Week": week}).Find(&constraints)
 		for _, c := range constraints {
 			allConstraints = append(allConstraints, c)
+		}
+		var currHistory []models.History
+		models.DB.Where(map[string]interface{}{"Student_id": student.Student_id}).Find(&currHistory)
+		for _, h := range currHistory {
+			history = append(history, h)
 		}
 	}
 
