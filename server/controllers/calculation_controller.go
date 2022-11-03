@@ -10,4 +10,6 @@ func CalculateTimetable(c *gin.Context) {
 	teacherId := c.Param("teacher_id")
 	week := c.Param("week")
 
+	teachingSlots := models.DB.Where(&Slot{})
+
 }
