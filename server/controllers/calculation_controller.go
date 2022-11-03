@@ -19,6 +19,15 @@ func CalculateTimetable(c *gin.Context) {
 	var students []models.Student
 	models.DB.Where(map[string]interface{}{"Teacher_id": teacherId}).Find(&students)
 
-	c.JSON(http.StatusOK, gin.H{"slots": slots, "students": students})
+	allConstraints := []models.Constraint{}
+	for _, student := range students {
+		var constraints []models.Constraint
+		models.DB.Where(map[string]interface{}{"Student_id": student.Student_id, "Week": week}).Find(&constraints)
+		for _, c := range constraints {
+			allConstraints = append(allConstraints, c)
+		}
+	}
+
+	c.JSON(http.StatusOK, gin.H{"data": allConstraints})
 
 }

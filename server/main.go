@@ -27,7 +27,7 @@ func main() {
 	router.GET("/history/:history_id", controllers.GetAllHistory)
 	router.DELETE("/history", controllers.DeleteSingleHistory)
 
-	router.GET("/timetable/:teacher_id", controllers.CalculateTimetable)
+	router.GET("/timetable/:teacher_id/:week", controllers.CalculateTimetable)
 
 	router.Run("localhost:3000")
 }
