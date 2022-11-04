@@ -24,8 +24,11 @@ func main() {
 	router.DELETE("/constraints/:constraint_id", controllers.DeleteSingleConstraint)
 
 	router.POST("/history", controllers.CreateHistory)
-	router.GET("/history/:history_id", controllers.GetAllHistory)
-	router.DELETE("/history", controllers.DeleteSingleHistory)
+	router.GET("/history", controllers.GetAllHistory)
+	router.DELETE("/history/:history_id", controllers.DeleteSingleHistory)
+
+	router.POST("/slot", controllers.CreateSlot)
+	router.DELETE("/slot/:slot_id", controllers.DeleteSingleSlot)
 
 	router.GET("/timetable/:teacher_id/:week", controllers.CalculateTimetable)
 

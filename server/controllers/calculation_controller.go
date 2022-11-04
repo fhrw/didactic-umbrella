@@ -69,7 +69,8 @@ func calcHistScore(i int, l int, t int) int {
 	if i == -1 {
 		return 0
 	}
-	score := (t / l) * i
+	// not sure about this calculation...
+	score := (t / l) * (i + 1)
 	return score
 }
 
