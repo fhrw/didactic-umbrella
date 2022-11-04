@@ -34,11 +34,64 @@ func CalculateTimetable(c *gin.Context) {
 		}
 	}
 
-	m := make(map[int][]string)
-	for _, c := range allConstraints {
+	constraintMap := makeConstraintsMap(allConstraints)
+	histMap := makeHistMap(history)
 
-		student := c.Student_id
-		slot := c.Slot
+	// m := [][]int{}
+	// for _, student := range students {
+	// 	c := constraintMap[student.Student_id]
+	// 	h := histMap[student.Student_id]
+	// 	weights := createWeights(slots, c, h)
+	// 	m = append(m, weights)
+	// }
+
+	w := createWeights(slots, constraintMap[1], histMap[1])
+
+	c.JSON(http.StatusOK, gin.H{"data": w})
+
+}
+
+func createWeights(slots []models.Slot, constraints []string, history []string) []int {
+	weights := []int{}
+	for _, s := range slots {
+		score := 0
+		if strArrIdx(constraints, s.Slot) != -1 {
+			score += 100
+		}
+		histI := strArrIdx(history, s.Slot)
+		histScore := calcHistScore(histI, len(history), 100)
+		score += histScore
+
+		weights = append(weights, score)
+	}
+	return weights
+}
+
+func calcHistScore(i int, l int, t int) int {
+	if i == -1 {
+		return 0
+	}
+	score := (t / l) * i
+	return score
+}
+
+func strArrIdx(a []string, s string) int {
+	index := -1
+	for i, v := range a {
+		if v == s {
+			return i
+		}
+	}
+	return index
+}
+
+func makeConstraintsMap(c []models.Constraint) map[int][]string {
+
+	m := make(map[int][]string)
+	for _, v := range c {
+
+		student := v.Student_id
+		slot := v.Slot
 		_, ok := m[student]
 		if !ok {
 			m[student] = []string{slot}
@@ -47,7 +100,25 @@ func CalculateTimetable(c *gin.Context) {
 		}
 
 	}
+	return m
 
-	c.JSON(http.StatusOK, gin.H{"data": m})
+}
+
+func makeHistMap(h []models.History) map[int][]string {
+
+	m := make(map[int][]string)
+	for _, v := range h {
+
+		student := v.Student_id
+		slot := v.Slot
+		_, ok := m[student]
+		if !ok {
+			m[student] = []string{slot}
+		} else {
+			m[student] = append(m[student], slot)
+		}
+
+	}
+	return m
 
 }
