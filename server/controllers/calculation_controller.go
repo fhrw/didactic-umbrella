@@ -34,6 +34,20 @@ func CalculateTimetable(c *gin.Context) {
 		}
 	}
 
-	c.JSON(http.StatusOK, gin.H{"data": allConstraints})
+	m := make(map[int][]string)
+	for _, c := range allConstraints {
+
+		student := c.Student_id
+		slot := c.Slot
+		_, ok := m[student]
+		if !ok {
+			m[student] = []string{slot}
+		} else {
+			m[student] = append(m[student], slot)
+		}
+
+	}
+
+	c.JSON(http.StatusOK, gin.H{"data": m})
 
 }
