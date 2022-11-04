@@ -4,6 +4,7 @@ import (
 	"net/http"
 	"strconv"
 
+	"github.com/fhrw/hungarian-algolang"
 	"github.com/fhrw/timetable-server/models"
 	"github.com/gin-gonic/gin"
 )
@@ -45,7 +46,12 @@ func CalculateTimetable(c *gin.Context) {
 		m = append(m, weights)
 	}
 
-	c.JSON(http.StatusOK, gin.H{"data": m})
+	solve, err := hungarianAlgolang.Solve(m)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"data": "failure"})
+	}
+
+	c.JSON(http.StatusOK, gin.H{"data": solve})
 
 }
 

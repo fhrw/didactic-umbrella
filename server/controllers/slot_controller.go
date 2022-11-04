@@ -36,3 +36,9 @@ func DeleteSingleSlot(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": "success"})
 
 }
+
+func GetAllSlots(c *gin.Context) {
+	var slots []models.Slot
+	models.DB.Find(&slots)
+	c.JSON(http.StatusOK, gin.H{"data": slots})
+}
