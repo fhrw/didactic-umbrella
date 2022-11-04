@@ -37,17 +37,15 @@ func CalculateTimetable(c *gin.Context) {
 	constraintMap := makeConstraintsMap(allConstraints)
 	histMap := makeHistMap(history)
 
-	// m := [][]int{}
-	// for _, student := range students {
-	// 	c := constraintMap[student.Student_id]
-	// 	h := histMap[student.Student_id]
-	// 	weights := createWeights(slots, c, h)
-	// 	m = append(m, weights)
-	// }
+	m := [][]int{}
+	for _, student := range students {
+		c := constraintMap[student.Student_id]
+		h := histMap[student.Student_id]
+		weights := createWeights(slots, c, h)
+		m = append(m, weights)
+	}
 
-	w := createWeights(slots, constraintMap[1], histMap[1])
-
-	c.JSON(http.StatusOK, gin.H{"data": w})
+	c.JSON(http.StatusOK, gin.H{"data": m})
 
 }
 
