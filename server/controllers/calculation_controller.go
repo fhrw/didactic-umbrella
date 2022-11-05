@@ -46,14 +46,20 @@ func CalculateTimetable(c *gin.Context) {
 		m = append(m, weights)
 	}
 
-	if len(m) == len(m[0]) {
+	if len(m) != len(m[0]) {
+		c.JSON(http.StatusBadRequest, gin.H{"data": "bad matrix"})
+	} else {
 		solve, err := hungarianAlgolang.Solve(m)
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"data": "failure"})
 		}
-		c.JSON(http.StatusOK, gin.H{"data": solve})
-	} else {
-		c.JSON(http.StatusBadRequest, gin.H{"data": "bad matrix"})
+		time := make(map[int]string)
+		for i, assign := range solve {
+			curr := students[i]
+			time[curr.Student_id] = slots[assign].Slot
+		}
+
+		c.JSON(http.StatusOK, gin.H{"data": time})
 	}
 
 }
