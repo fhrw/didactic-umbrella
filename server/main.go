@@ -3,11 +3,13 @@ package main
 import (
 	"github.com/fhrw/timetable-server/controllers"
 	"github.com/fhrw/timetable-server/models"
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
 
 func main() {
 	router := gin.Default()
+	router.Use(cors.Default())
 
 	models.ConnectDatabase()
 
