@@ -21,3 +21,11 @@ func CreateTeacher(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": teacher})
 
 }
+
+func GetAllTeachers(c *gin.Context) {
+	var teachers []models.Teacher
+
+	models.DB.Find(&teachers)
+
+	c.JSON(http.StatusOK, gin.H{"data": teachers})
+}

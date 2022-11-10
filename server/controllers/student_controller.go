@@ -45,6 +45,15 @@ func GetSingleStudent(c *gin.Context) {
 
 }
 
+func GetTeachersStudents(c *gin.Context) {
+	teacher := c.Param("teacher_id")
+	var students []models.Student
+
+	models.DB.Where("teacher_id = ?", teacher).Find(&students)
+
+	c.JSON(http.StatusOK, gin.H{"data": students})
+}
+
 func UpdateStudent(c *gin.Context) {
 
 	var student models.Student

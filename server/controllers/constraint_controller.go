@@ -46,3 +46,12 @@ func GetAllConstraints(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": constraints})
 
 }
+
+func GetWeekConstraints(c *gin.Context) {
+	week := c.Param("week")
+	var constraints []models.Constraint
+
+	models.DB.Where("week = ?", week).Find(&constraints)
+
+	c.JSON(http.StatusOK, gin.H{"data": constraints})
+}
