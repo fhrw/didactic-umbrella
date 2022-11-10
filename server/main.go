@@ -31,6 +31,7 @@ func main() {
 	router.POST("/history", controllers.CreateHistory)
 	router.GET("/history", controllers.GetAllHistory)
 	router.DELETE("/history/:history_id", controllers.DeleteSingleHistory)
+	router.GET("/history/:week", controllers.GetPastHistory)
 
 	router.POST("/slot", controllers.CreateSlot)
 	router.DELETE("/slot/:slot_id", controllers.DeleteSingleSlot)

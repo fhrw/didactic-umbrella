@@ -46,3 +46,12 @@ func GetAllHistory(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": histories})
 
 }
+
+func GetPastHistory(c *gin.Context) {
+	week := c.Param("week")
+	var histories []models.History
+
+	models.DB.Where("week = ?", week).Find(&histories)
+
+	c.JSON(http.StatusOK, gin.H{"data": histories})
+}
