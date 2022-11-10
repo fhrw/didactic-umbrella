@@ -3,16 +3,21 @@ import { connect } from 'react-redux'
 
 import { fetchStudents } from '../actions/studentsActions'
 import { fetchConstraints } from '../actions/constraintsActions'
+import { incrementWeek } from '../actions/uiActions'
 
 function TestControls({ dispatch, loading, students, constraints, hasErrors }) {
 
   useEffect(() => {
     dispatch(fetchStudents())
-    dispatch(fetchConstraints())
+    dispatch(fetchConstraints(1))
   }, [dispatch])
 
+  function handle() {
+    dispatch(incrementWeek())
+  }
+
   return (
-    <div>testing</div>
+    <div><button onClick={handle} /></div>
   )
 }
 

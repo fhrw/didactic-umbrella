@@ -18,12 +18,12 @@ export const getConstraintsFailure = () => ({
 
 // comine them all in an asynchronous thunk
 
-export function fetchConstraints() {
+export function fetchConstraints(week) {
   return async (dispatch) => {
     dispatch(getConstraints())
 
     try {
-      const response = await fetch('http://localhost:3000/constraints', { method: "GET" })
+      const response = await fetch(`http://localhost:3000/constraints/${week}`, { method: "GET" })
       const data = await response.json()
 
       dispatch(getConstraintsSuccess(data.data))
