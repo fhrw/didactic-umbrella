@@ -4,11 +4,13 @@ import { connect } from 'react-redux'
 import { fetchStudents } from '../actions/studentsActions'
 import { fetchConstraints } from '../actions/constraintsActions'
 import { decrementWeek, incrementWeek } from '../actions/uiActions'
+import { fetchHistory } from '../actions/historyActions'
 
 function TestControls({ dispatch, loading, students, constraints, ui, hasErrors }) {
 
   useEffect(() => {
     dispatch(fetchStudents())
+    dispatch(fetchHistory())
     dispatch(fetchConstraints(ui.week))
   }, [dispatch])
 

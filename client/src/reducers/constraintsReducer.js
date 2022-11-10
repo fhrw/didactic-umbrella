@@ -1,4 +1,3 @@
-
 import * as actions from '../actions/constraintsActions.js'
 
 export const initialState = {
