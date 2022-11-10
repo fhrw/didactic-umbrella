@@ -11,24 +11,8 @@ function TestControls({ dispatch, loading, students, constraints, hasErrors }) {
     dispatch(fetchConstraints())
   }, [dispatch])
 
-  const renderStudents = () => {
-    if (loading.students) return <p>Loading Students...</p>
-    if (hasErrors.students) return <p>Unable to display students</p>
-    return students.map((student) => <p>{student.first_name}</p>)
-  }
-
-  const renderConstraints = () => {
-    if (loading.constraints) return <p>Loading constraints...</p>
-    if (hasErrors.constraints) return <p>Unable to display constraints</p>
-    return constraints.map((constraint) => <p>{constraint.slot}</p>)
-  }
-
   return (
-    <section>
-      <h1>Students</h1>
-      {renderStudents()}
-      {renderConstraints()}
-    </section>
+    <div>testing</div>
   )
 }
 
