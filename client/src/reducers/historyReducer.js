@@ -1,5 +1,3 @@
-import * as actions from '../actions/historyActions'
-
 export const initialState = {
   history: [],
   loading: false,

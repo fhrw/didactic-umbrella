@@ -22,6 +22,7 @@ func main() {
 
 	router.POST("/teacher", controllers.CreateTeacher)
 	router.GET("/teacher", controllers.GetAllTeachers)
+	router.PATCH("/teacher/:teacher_id", controllers.UpdateTeacher)
 
 	router.POST("/constraints", controllers.CreateConstraint)
 	router.GET("/constraints", controllers.GetAllConstraints)

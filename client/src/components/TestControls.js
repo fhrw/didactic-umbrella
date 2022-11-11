@@ -16,13 +16,17 @@ function TestControls({ dispatch, loading, students, constraints, ui, hasErrors 
 
   function handleInc() {
     dispatch(incrementWeek())
-    dispatch(fetchConstraints(ui.week + 1))
+    // dispatch(fetchConstraints(ui.week + 1))
   }
 
   function handleDec() {
     dispatch(decrementWeek())
-    dispatch(fetchConstraints(ui.week - 1))
+    // dispatch(fetchConstraints(ui.week - 1))
   }
+
+  useEffect(() => {
+    dispatch(fetchConstraints(ui.week))
+  }, [dispatch, ui.week])
 
   return (
     <div>

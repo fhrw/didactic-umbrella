@@ -1,0 +1,17 @@
+#+title: Timetabler Todo
+* IMPLEMENT
+** CLIENT
+*** UI
+**** Dashboard
+Main view
+***** Student List
+***** Navigation
+***** Util Bar
+*** STORE
+**** Get history should only get history for current students
+I think this is also known as history related to the current teacherID
+** BACKEND
+*** Students have start and end weeks
+*** Teacher has term length
+*** Need endpoint to get history relevant to teacher id
+* BUGS
