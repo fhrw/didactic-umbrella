@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { fetchStudents } from '../actions/studentsActions'
 import { fetchTeacher } from '../actions/teacherActions'
 import { fetchConstraints } from '../actions/constraintsActions'
-import { decrementWeek, incrementWeek } from '../actions/uiActions'
+import { decrementWeek, incrementWeek, setWeek } from '../actions/uiActions'
 import { fetchHistory } from '../actions/historyActions'
 
 function TestControls({ dispatch, loading, students, constraints, teacher, ui, hasErrors }) {
@@ -18,12 +18,12 @@ function TestControls({ dispatch, loading, students, constraints, teacher, ui, h
 
 
   function handleInc() {
-    dispatch(incrementWeek())
+    dispatch(setWeek(1))
     // dispatch(fetchConstraints(ui.week + 1))
   }
 
   function handleDec() {
-    dispatch(decrementWeek())
+    dispatch(setWeek(-1))
     // dispatch(fetchConstraints(ui.week - 1))
   }
 

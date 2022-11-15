@@ -35,6 +35,7 @@ func CalculateTimetable(c *gin.Context) {
 		}
 	}
 
+	// this could use refactoring
 	constraintMap := makeConstraintsMap(allConstraints)
 	histMap := makeHistMap(history)
 

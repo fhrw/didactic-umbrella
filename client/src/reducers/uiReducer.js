@@ -6,10 +6,8 @@ export const initialState = {
 
 export default function uiReducer(state = initialState, action) {
   switch (action.type) {
-    case "increment":
-      return { week: state.week + 1 }
-    case "decrement":
-      return { week: state.week - 1 }
+    case "setWeek":
+      return { week: state.week + action.payload }
     default:
       return state
   }

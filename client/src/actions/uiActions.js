@@ -6,11 +6,7 @@ export const decrementWeek = () => ({
   type: "decrement"
 })
 
-export const setWeek = () => ({
-
-})
-
-export const somethingElse = (increment) => ({
+export const setWeek = (increment) => ({
   type: "setWeek",
   payload: increment
 })
