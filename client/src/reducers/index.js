@@ -4,7 +4,8 @@ import studentsReducer from './studentsReducer'
 import constraintsReducer from './constraintsReducer'
 import historyReducer from './historyReducer'
 import uiReducer from './uiReducer'
+import teacherReducer from './teacherReducer'
 
-const rootReducer = combineReducers({ students: studentsReducer, constraints: constraintsReducer, history: historyReducer, uiData: uiReducer })
+const rootReducer = combineReducers({ students: studentsReducer, constraints: constraintsReducer, teacher: teacherReducer, history: historyReducer, uiData: uiReducer })
 
 export default rootReducer

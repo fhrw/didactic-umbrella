@@ -9,11 +9,11 @@ export const getHistoryFailure = () => ({
   type: "getHistoryFailure"
 })
 
-export function fetchHistory() {
+export function fetchHistory(teacher_id) {
   return async (dispatch) => {
     dispatch(getHistory())
     try {
-      const response = await fetch("http://localhost:3000/history", { method: "GET" })
+      const response = await fetch(`http://localhost:3000/history/${teacher_id}`, { method: "GET" })
       const data = await response.json()
 
       dispatch(getHistorySuccess(data.data))

@@ -48,3 +48,16 @@ func UpdateTeacher(c *gin.Context) {
 
 	c.JSON(http.StatusOK, gin.H{"data": teacher})
 }
+
+func GetSingleTeacher(c *gin.Context) {
+	id := c.Param("teacher_id")
+
+	var teacher models.Teacher
+
+	if err := models.DB.Where("teacher_id = ?", id).First(&teacher).Error; err != nil {
+		c.AbortWithStatusJSON(http.StatusNotFound, gin.H{"error": "record not found"})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"data": teacher})
+}

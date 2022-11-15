@@ -23,6 +23,7 @@ func main() {
 	router.POST("/teacher", controllers.CreateTeacher)
 	router.GET("/teacher", controllers.GetAllTeachers)
 	router.PATCH("/teacher/:teacher_id", controllers.UpdateTeacher)
+	router.GET("/teacher/:teacher_id", controllers.GetSingleTeacher)
 
 	router.POST("/constraints", controllers.CreateConstraint)
 	router.GET("/constraints", controllers.GetAllConstraints)
@@ -32,7 +33,7 @@ func main() {
 	router.POST("/history", controllers.CreateHistory)
 	router.GET("/history", controllers.GetAllHistory)
 	router.DELETE("/history/:history_id", controllers.DeleteSingleHistory)
-	router.GET("/history/:week", controllers.GetPastHistory)
+	router.GET("/history/:teacher_id", controllers.GetRelevantHistory)
 
 	router.POST("/slot", controllers.CreateSlot)
 	router.DELETE("/slot/:slot_id", controllers.DeleteSingleSlot)

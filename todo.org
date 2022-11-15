@@ -8,7 +8,8 @@ Main view
 ***** Navigation
 ***** Util Bar
 *** STORE
-**** Get history should only get history for current students
+**** DONE Get history should only get history for current students
+This is implemented but need to update when theres some kind of Auth because the store doesn't know the teacher ID to begin with so the call will be undefined if the teacher is not known at the time the call is made.
 I think this is also known as history related to the current teacherID
 ** BACKEND
 *** Students have start and end weeks

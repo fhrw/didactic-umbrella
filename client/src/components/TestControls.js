@@ -2,17 +2,20 @@ import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 
 import { fetchStudents } from '../actions/studentsActions'
+import { fetchTeacher } from '../actions/teacherActions'
 import { fetchConstraints } from '../actions/constraintsActions'
 import { decrementWeek, incrementWeek } from '../actions/uiActions'
 import { fetchHistory } from '../actions/historyActions'
 
-function TestControls({ dispatch, loading, students, constraints, ui, hasErrors }) {
+function TestControls({ dispatch, loading, students, constraints, teacher, ui, hasErrors }) {
 
   useEffect(() => {
     dispatch(fetchStudents())
-    dispatch(fetchHistory())
+    dispatch(fetchTeacher(1))
+    dispatch(fetchHistory(1))
     dispatch(fetchConstraints(ui.week))
   }, [dispatch])
+
 
   function handleInc() {
     dispatch(incrementWeek())
@@ -38,6 +41,7 @@ function TestControls({ dispatch, loading, students, constraints, ui, hasErrors 
 
 const mapStateToProps = (state) => ({
   students: state.students.students,
+  teacher: state.teacher.teacher,
   constraints: state.constraints.constraints,
   loading: { students: state.students.loading, constraints: state.constraints.loading },
   hasErrors: { students: state.students.hasErrors, constraints: state.constraints.hasErrors },

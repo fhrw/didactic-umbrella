@@ -13,7 +13,7 @@ export const getTeacherFailure = () => ({
 
 export function fetchTeacher(teacherId) {
   return async (dispatch) => {
-    dispatch(getTeacher())
+    dispatch(getTeacher(teacherId))
     try {
       const response = await fetch(`http://localhost:3000/teacher/${teacherId}`, { method: "GET" })
       const data = await response.json()

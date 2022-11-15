@@ -55,3 +55,23 @@ func GetPastHistory(c *gin.Context) {
 
 	c.JSON(http.StatusOK, gin.H{"data": histories})
 }
+
+func GetRelevantHistory(c *gin.Context) {
+	teacher := c.Param("teacher_id")
+	var allHistory []models.History
+	var students []models.Student
+
+	models.DB.Find(&allHistory)
+	models.DB.Where("teacher_id = ?", teacher).Find(&students)
+
+	filteredHistory := []models.History{}
+	for _, hist := range allHistory {
+		for _, stu := range students {
+			if hist.Student_id == stu.Student_id {
+				filteredHistory = append(filteredHistory, hist)
+			}
+		}
+	}
+
+	c.JSON(http.StatusOK, gin.H{"data": filteredHistory})
+}
