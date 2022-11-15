@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 
 import { fetchStudents } from '../actions/studentsActions'
-import { fetchTeacher } from '../actions/teacherActions'
+import { fetchTeacher, modifyTeacher } from '../actions/teacherActions'
 import { fetchConstraints } from '../actions/constraintsActions'
 import { decrementWeek, incrementWeek, setWeek } from '../actions/uiActions'
 import { fetchHistory } from '../actions/historyActions'
@@ -13,7 +13,6 @@ function TestControls({ dispatch, loading, students, constraints, teacher, ui, h
     dispatch(fetchStudents())
     dispatch(fetchTeacher(1))
     dispatch(fetchHistory(1))
-    dispatch(fetchConstraints(ui.week))
   }, [dispatch])
 
 
@@ -31,10 +30,23 @@ function TestControls({ dispatch, loading, students, constraints, teacher, ui, h
     dispatch(fetchConstraints(ui.week))
   }, [dispatch, ui.week])
 
+  function increaseLength() {
+    const n = { ...teacher, term_length: teacher.term_length + 1 }
+    dispatch(modifyTeacher(1, n))
+  }
+
+  function decreaseLength() {
+    const n = { ...teacher, term_length: teacher.term_length - 1 }
+    dispatch(modifyTeacher(1, n))
+  }
+
   return (
     <div>
       <button onClick={handleInc} >increment</button>
       <button onClick={handleDec} >decrement</button>
+      <button onClick={increaseLength}>increase</button>
+      <button onClick={decreaseLength}>decrease</button>
+      <p>{teacher.term_length}</p>
     </div>
   )
 }
