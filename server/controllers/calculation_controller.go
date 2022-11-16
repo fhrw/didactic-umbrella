@@ -13,6 +13,10 @@ func CalculateTimetable(c *gin.Context) {
 
 	teacherId, _ := strconv.Atoi(c.Param("teacher_id"))
 	week := c.Param("week")
+	weekInt, err := strconv.Atoi(week)
+	if err != nil {
+		panic(err)
+	}
 
 	var slots []models.Slot
 	models.DB.Where(map[string]interface{}{"Teacher_id": teacherId, "Week": week}).Find(&slots)
@@ -49,20 +53,39 @@ func CalculateTimetable(c *gin.Context) {
 
 	if len(m) != len(m[0]) {
 		c.JSON(http.StatusBadRequest, gin.H{"data": "bad matrix"})
+		return
 	} else {
 		solve, err := hungarianAlgolang.Solve(m)
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"data": "failure"})
+			return
 		}
-		time := make(map[int]string)
+
+		// modify history to match output
+		// create new entries
+		var histUpdates []models.HistoryInput
 		for i, assign := range solve {
-			curr := students[i]
-			time[curr.Student_id] = slots[assign].Slot
+			h := models.HistoryInput{Student_id: students[i].Student_id, Week: weekInt, Slot: slots[assign].Slot}
+			histUpdates = append(histUpdates, h)
 		}
 
-		c.JSON(http.StatusOK, gin.H{"data": time})
-	}
+		// delete old entries for the week involving curr studnets
+		for _, h := range history {
+			for _, stu := range students {
+				if h.Student_id == stu.Student_id && h.Week == weekInt {
+					models.DB.Delete(&h)
+					return
+				}
+			}
+		}
 
+		// insert new entries
+		for _, input := range histUpdates {
+			models.DB.Create(&input)
+		}
+
+		c.JSON(http.StatusOK, gin.H{"new": histUpdates})
+	}
 }
 
 func createWeights(slots []models.Slot, constraints []string, history []string) []int {

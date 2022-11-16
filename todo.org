@@ -14,6 +14,7 @@ The teacher holds the term length so need to use Update teacher endpoint
 This is implemented but need to update when theres some kind of Auth because the store doesn't know the teacher ID to begin with so the call will be undefined if the teacher is not known at the time the call is made.
 I think this is also known as history related to the current teacherID
 ** BACKEND
+*** TODO calculate timetable modifies the history to match it's new calculation
 *** TODO Students have start and end weeks
 *** DONE Teacher has term length
 *** TODO Need endpoint to get history relevant to teacher id
