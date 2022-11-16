@@ -38,6 +38,7 @@ func main() {
 	router.POST("/slot", controllers.CreateSlot)
 	router.DELETE("/slot/:slot_id", controllers.DeleteSingleSlot)
 	router.GET("/slot", controllers.GetAllSlots)
+	router.GET("/slots/:teacher_id/:week", controllers.GetWeekSlots)
 
 	router.GET("/timetable/:teacher_id/:week", controllers.CalculateTimetable)
 

@@ -6,8 +6,9 @@ import { fetchTeacher, modifyTeacher } from '../actions/teacherActions'
 import { fetchConstraints } from '../actions/constraintsActions'
 import { decrementWeek, incrementWeek, setWeek } from '../actions/uiActions'
 import { fetchHistory } from '../actions/historyActions'
+import { fetchSlots } from '../actions/slotActions'
 
-function TestControls({ dispatch, loading, students, constraints, teacher, ui, hasErrors }) {
+function TestControls({ dispatch, loading, students, history, constraints, teacher, ui, hasErrors }) {
 
   useEffect(() => {
     dispatch(fetchStudents())
@@ -28,6 +29,7 @@ function TestControls({ dispatch, loading, students, constraints, teacher, ui, h
 
   useEffect(() => {
     dispatch(fetchConstraints(ui.week))
+    dispatch(fetchSlots(1, ui.week))
   }, [dispatch, ui.week])
 
   function increaseLength() {
@@ -40,13 +42,26 @@ function TestControls({ dispatch, loading, students, constraints, teacher, ui, h
     dispatch(modifyTeacher(1, n))
   }
 
+  function handleCalc() {
+    fetch(`http://localhost:3000/timetable/${teacher.teacher_id}/${ui.week}`)
+    dispatch(fetchHistory(teacher.teacher_id))
+  }
+
+  const viewTimeTable = history.filter((item) => item.week === ui.week)
+
   return (
     <div>
       <button onClick={handleInc} >increment</button>
       <button onClick={handleDec} >decrement</button>
       <button onClick={increaseLength}>increase</button>
       <button onClick={decreaseLength}>decrease</button>
-      <p>{teacher.term_length}</p>
+      <p>curr view: {ui.week}</p>
+      <p>Term Length: {teacher.term_length}</p>
+      <p>timetable test</p>
+      <button onClick={handleCalc}>calculate timetable for this week</button>
+      <div>
+        {viewTimeTable.map((item) => <p key={item.history_id}>{item.slot}: id_{item.student_id}</p>)}
+      </div>
     </div>
   )
 }
@@ -54,8 +69,10 @@ function TestControls({ dispatch, loading, students, constraints, teacher, ui, h
 const mapStateToProps = (state) => ({
   students: state.students.students,
   teacher: state.teacher.teacher,
+  slots: state.slots.slots,
   constraints: state.constraints.constraints,
-  loading: { students: state.students.loading, constraints: state.constraints.loading },
+  history: state.history.history,
+  loading: { students: state.students.loading, constraints: state.constraints.loading, teacher: state.teacher.loading, slots: state.slots, loading: state.slots.loading, history: state.history.loading },
   hasErrors: { students: state.students.hasErrors, constraints: state.constraints.hasErrors },
   ui: { week: state.uiData.week }
 })

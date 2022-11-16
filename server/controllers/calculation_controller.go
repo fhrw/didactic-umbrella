@@ -20,7 +20,6 @@ func CalculateTimetable(c *gin.Context) {
 
 	var slots []models.Slot
 	models.DB.Where(map[string]interface{}{"Teacher_id": teacherId, "Week": week}).Find(&slots)
-
 	var students []models.Student
 	models.DB.Where(map[string]interface{}{"Teacher_id": teacherId}).Find(&students)
 

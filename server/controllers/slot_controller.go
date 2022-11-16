@@ -42,3 +42,13 @@ func GetAllSlots(c *gin.Context) {
 	models.DB.Find(&slots)
 	c.JSON(http.StatusOK, gin.H{"data": slots})
 }
+
+func GetWeekSlots(c *gin.Context) {
+	teacherId := c.Param("teacher_id")
+	week := c.Param("week")
+
+	var slots []models.Slot
+	models.DB.Where(map[string]interface{}{"Teacher_id": teacherId, "Week": week}).Find(&slots)
+
+	c.JSON(http.StatusOK, gin.H{"data": slots})
+}
