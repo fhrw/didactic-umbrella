@@ -15,6 +15,8 @@ This is implemented but need to update when theres some kind of Auth because the
 I think this is also known as history related to the current teacherID
 ** BACKEND
 *** TODO calculate timetable modifies the history to match it's new calculation
+currently not working as expected. needs bug testing
+*** TODO come up with better solution to return from the calculation controller!
 *** TODO Students have start and end weeks
 *** DONE Teacher has term length
 *** TODO Need endpoint to get history relevant to teacher id

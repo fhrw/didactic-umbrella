@@ -69,22 +69,26 @@ func CalculateTimetable(c *gin.Context) {
 			histUpdates = append(histUpdates, h)
 		}
 
+		c.JSON(http.StatusOK, gin.H{"updates": histUpdates})
+
 		// delete old entries for the week involving curr studnets
 		for _, h := range history {
 			for _, stu := range students {
 				if h.Student_id == stu.Student_id && h.Week == weekInt {
 					models.DB.Delete(&h)
-					return
+					break
 				}
 			}
 		}
 
 		// insert new entries
 		for _, input := range histUpdates {
-			models.DB.Create(&input)
+			hist := models.History{Student_id: input.Student_id, Week: input.Week, Slot: input.Slot}
+			models.DB.Create(&hist)
 		}
 
-		c.JSON(http.StatusOK, gin.H{"new": histUpdates})
+		// feel like there might be a better return value
+		// front end needs to update it's history
 	}
 }
 
