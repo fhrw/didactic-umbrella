@@ -5,7 +5,7 @@ import { fetchStudents } from '../actions/studentsActions'
 import { fetchTeacher, modifyTeacher } from '../actions/teacherActions'
 import { fetchConstraints } from '../actions/constraintsActions'
 import { decrementWeek, incrementWeek, setWeek } from '../actions/uiActions'
-import { fetchHistory } from '../actions/historyActions'
+import { fetchHistory, fetchRecalc } from '../actions/historyActions'
 import { fetchSlots } from '../actions/slotActions'
 
 function TestControls({ dispatch, loading, students, history, constraints, teacher, ui, hasErrors }) {
@@ -43,8 +43,7 @@ function TestControls({ dispatch, loading, students, history, constraints, teach
   }
 
   function handleCalc() {
-    fetch(`http://localhost:3000/timetable/${teacher.teacher_id}/${ui.week}`)
-      .then(dispatch(fetchHistory(teacher.teacher_id)))
+    dispatch(fetchRecalc(teacher.teacher_id, ui.week))
   }
 
 
