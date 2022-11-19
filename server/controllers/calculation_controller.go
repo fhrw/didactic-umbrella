@@ -84,9 +84,17 @@ func CalculateTimetable(c *gin.Context) {
 			models.DB.Create(&hist)
 		}
 
-		// feel like there might be a better return value
-		// front end needs to update it's history
-		c.JSON(http.StatusOK, gin.H{"data": "success"})
+		// new simple but inefficient solution - get everything from DB again...
+		var updatedHistory []models.History
+		for _, s := range students {
+			var stuHist []models.History
+			models.DB.Where(map[string]interface{}{"Student_id": s.Student_id}).Find(&stuHist)
+			for _, h := range stuHist {
+				updatedHistory = append(updatedHistory, h)
+			}
+		}
+
+		c.JSON(http.StatusOK, gin.H{"data": updatedHistory})
 	}
 }
 
