@@ -43,7 +43,10 @@ function TestControls({ dispatch, loading, students, history, constraints, teach
   }
 
   function handleCalc() {
+    fetch(`http://localhost:3000/timetable/${teacher.teacher_id}/${ui.week}`)
+      .then(() => { dispatch(fetchHistory(teacher.teacher_id)) })
   }
+
 
   const viewTimeTable = history.filter((item) => item.week === ui.week)
 

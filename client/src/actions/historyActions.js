@@ -23,3 +23,7 @@ export function fetchHistory(teacher_id) {
   }
 }
 
+export const RECALC_REQUESTED = "RECALC_REQUESTED"
+export const RECALC_RECIEVED = "RECALC_RECIEVED"
+export const RECALC_FAILED = "RECALC_FAILED"
+
