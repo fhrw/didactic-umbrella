@@ -68,8 +68,6 @@ func CalculateTimetable(c *gin.Context) {
 			histUpdates = append(histUpdates, h)
 		}
 
-		c.JSON(http.StatusOK, gin.H{"updates": histUpdates})
-
 		// delete old entries for the week involving curr studnets
 		for _, h := range history {
 			for _, stu := range students {
@@ -88,6 +86,7 @@ func CalculateTimetable(c *gin.Context) {
 
 		// feel like there might be a better return value
 		// front end needs to update it's history
+		c.JSON(http.StatusOK, gin.H{"data": "success"})
 	}
 }
 
