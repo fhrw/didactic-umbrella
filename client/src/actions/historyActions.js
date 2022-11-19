@@ -23,7 +23,28 @@ export function fetchHistory(teacher_id) {
   }
 }
 
-export const RECALC_REQUESTED = "RECALC_REQUESTED"
-export const RECALC_RECIEVED = "RECALC_RECIEVED"
-export const RECALC_FAILED = "RECALC_FAILED"
+export const recalc = () => ({
+  type: "recalc"
+})
 
+export const recalcSuccess = (history) => ({
+  type: "recalcSuccess",
+  payload: history
+})
+
+export const recalcFailure = () => ({
+  type: "recalcFailure"
+})
+
+export function fetchRecalc(teacher_id, week) {
+  return async (dispatch) => {
+    dispatch(recalc())
+    try {
+      const response = await fetch(`http://localhost:3000/timetable/${teacher_id}/${week}`)
+      const data = await response.json()
+      dispatch(recalcSuccess(data.data))
+    } catch (error) {
+      dispatch(recalcFailure())
+    }
+  }
+}
