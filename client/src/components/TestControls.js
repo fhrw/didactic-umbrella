@@ -3,12 +3,12 @@ import { connect } from 'react-redux'
 
 import { fetchStudents } from '../actions/studentsActions'
 import { fetchTeacher, modifyTeacher } from '../actions/teacherActions'
-import { fetchConstraints } from '../actions/constraintsActions'
+import { addConstraint, fetchAddConstraint, fetchConstraints, fetchDelConstraint } from '../actions/constraintsActions'
 import { decrementWeek, incrementWeek, setWeek } from '../actions/uiActions'
 import { fetchHistory, fetchRecalc } from '../actions/historyActions'
 import { fetchSlots } from '../actions/slotActions'
 
-function TestControls({ dispatch, loading, students, history, constraints, teacher, ui, hasErrors }) {
+function TestControls({ dispatch, loading, students, slots, history, constraints, teacher, ui, hasErrors }) {
 
   useEffect(() => {
     dispatch(fetchStudents())
@@ -34,20 +34,46 @@ function TestControls({ dispatch, loading, students, history, constraints, teach
 
   function increaseLength() {
     const n = { ...teacher, term_length: teacher.term_length + 1 }
-    dispatch(modifyTeacher(1, n))
+    dispatch(modifyTeacher(teacher.teacher_id, n))
   }
 
   function decreaseLength() {
     const n = { ...teacher, term_length: teacher.term_length - 1 }
-    dispatch(modifyTeacher(1, n))
+    dispatch(modifyTeacher(teacher.teacher_id, n))
   }
 
   function handleCalc() {
     dispatch(fetchRecalc(teacher.teacher_id, ui.week))
   }
 
+  function renderTimetable() {
+    if (history.loading) return <p>Loading...</p>
+    if (history.hasErrors) return <p>Unable to display</p>
+    const viewTimeable = history.filter((item) => item.week === ui.week)
+    return viewTimeable.map((item) => <p>{item.slot}: {item.student_id}</p>)
+  }
 
-  const viewTimeTable = history.filter((item) => item.week === ui.week)
+  function handleToggleOff(constraint_id) {
+    dispatch(fetchDelConstraint(constraint_id))
+  }
+
+  function handleToggleOn(student_id, week, slot) {
+    dispatch(fetchAddConstraint(student_id, week, slot))
+  }
+
+  function renderSlots(student_id) {
+    if (slots.loading || constraints.loading) return <p>Loading...</p>
+    if (slots.hasErrors || constraints.hasErrors) return <p>Unable to display</p>
+    const constrainedSlots = constraints.filter((constraint) => constraint.student_id === student_id)
+    return slots.map((slot) => {
+      const matches = constrainedSlots.filter((constraint) => constraint.slot === slot.slot)
+      if (matches.length) {
+        const target = matches[0].constraint_id
+        return <button onClick={() => handleToggleOff(target)}>constrained: {slot.slot}</button>
+      }
+      return <button onClick={() => handleToggleOn(1, ui.week, slot.slot)}>{slot.slot}</button>
+    })
+  }
 
   return (
     <div>
@@ -60,7 +86,11 @@ function TestControls({ dispatch, loading, students, history, constraints, teach
       <p>timetable test</p>
       <button onClick={handleCalc}>calculate timetable for this week</button>
       <div>
-        {viewTimeTable.map((item) => <p key={item.history_id}>{item.slot}: id_{item.student_id}</p>)}
+        {renderTimetable()}
+      </div>
+      <div>
+        <p>slots:</p>
+        {renderSlots(1)}
       </div>
     </div>
   )
