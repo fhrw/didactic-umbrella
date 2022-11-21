@@ -33,7 +33,7 @@ func DeleteSingleConstraint(c *gin.Context) {
 	}
 
 	models.DB.Delete(&constraint)
-	c.JSON(http.StatusOK, gin.H{"data": "success"})
+	c.JSON(http.StatusOK, gin.H{"data": constraint})
 
 }
 

@@ -51,12 +51,12 @@ func CalculateTimetable(c *gin.Context) {
 	}
 
 	if len(m) != len(m[0]) {
-		c.JSON(http.StatusBadRequest, gin.H{"data": "bad matrix"})
+		c.JSON(http.StatusBadRequest, gin.H{"data": history})
 		return
 	} else {
 		solve, err := hungarianAlgolang.Solve(m)
 		if err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{"data": "failure"})
+			c.JSON(http.StatusInternalServerError, gin.H{"data": history})
 			return
 		}
 
