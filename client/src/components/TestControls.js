@@ -6,7 +6,7 @@ import { fetchTeacher, modifyTeacher } from '../actions/teacherActions'
 import { addConstraint, fetchAddConstraint, fetchConstraints, fetchDelConstraint } from '../actions/constraintsActions'
 import { decrementWeek, incrementWeek, setWeek } from '../actions/uiActions'
 import { fetchHistory, fetchRecalc } from '../actions/historyActions'
-import { fetchSlots } from '../actions/slotActions'
+import { fetchSlots, fetchAddSlot, fetchDeleteSlot } from '../actions/slotActions'
 
 function TestControls({ dispatch, loading, students, slots, history, constraints, teacher, ui, hasErrors }) {
 
@@ -75,11 +75,27 @@ function TestControls({ dispatch, loading, students, slots, history, constraints
     })
   }
 
-  function renderTeacherChoice(teacher_id) {
+  function teacherToggleOn(teacher_id, week, slot) {
+    dispatch(fetchAddSlot(teacher_id, week, slot))
+  }
+
+  function teacherToggleOff(slot_id) {
+    dispatch(fetchDeleteSlot(slot_id))
+  }
+
+  function renderTeacherChoice() {
     const slotOptions = ["monday 1", "monday 2", "monday 3", "monday 4", "monday 5", "monday 6"]
-    if (slots.loading) return <p>loading...</p>
-    if (slots.hasErrors) return <p>Error...</p>
-    return slotOptions.map((slot) => <button>{slot}</button>)
+    if (slots.loading) return <p>Loading..</p>
+    if (slots.hasErrors) return <p>Unable to display...</p>
+    if (!slots.length) return
+    const selected = slots.map((slot) => slotOptions.indexOf(slot.slot))
+    return slotOptions.map((slot, i) => {
+      if (selected.indexOf(i) == -1) {
+        return <button onClick={() => teacherToggleOn(teacher.teacher_id, ui.week, slot)}>{slot}</button>
+      }
+      // needs refactor above to ensure we can access the right slot_id here
+      return <button onClick={() => teacherToggleOff(slots[i].slot_id)}>selected: {slot}</button>
+    })
   }
 
   return (
