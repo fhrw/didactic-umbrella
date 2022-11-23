@@ -43,7 +43,7 @@ export function fetchAddSlot(teacher_id, week, slot) {
     dispatch(addSlot())
     try {
       const body = { teacher_id: teacher_id, week: week, slot: slot }
-      const response = await fetch(`http://localhost:3000/slots`, { method: "POST", body: JSON.stringify(body) })
+      const response = await fetch(`http://localhost:3000/slot`, { method: "POST", body: JSON.stringify(body) })
       const data = await response.json()
       dispatch(addSlotSuccess(data.data))
     } catch (error) {
@@ -69,7 +69,7 @@ export function fetchDeleteSlot(slot_id) {
   return async (dispatch, getState) => {
     dispatch(deleteSlot())
     try {
-      const response = await fetch(`http://localhost:3000/slots/${slot_id}`, { method: "DELETE" })
+      const response = await fetch(`http://localhost:3000/slot/${slot_id}`, { method: "DELETE" })
       const data = await response.json()
       const { slots } = getState().slots.slots
       const filtered = slots.filter((slot) => slot.slot_id !== data.data.slot_id)

@@ -88,14 +88,7 @@ function TestControls({ dispatch, loading, students, slots, history, constraints
     if (slots.loading) return <p>Loading..</p>
     if (slots.hasErrors) return <p>Unable to display...</p>
     if (!slots.length) return
-    const selected = slots.map((slot) => slotOptions.indexOf(slot.slot))
-    return slotOptions.map((slot, i) => {
-      if (selected.indexOf(i) == -1) {
-        return <button onClick={() => teacherToggleOn(teacher.teacher_id, ui.week, slot)}>{slot}</button>
-      }
-      // needs refactor above to ensure we can access the right slot_id here
-      return <button onClick={() => teacherToggleOff(slots[i].slot_id)}>selected: {slot}</button>
-    })
+    // broken
   }
 
   return (
