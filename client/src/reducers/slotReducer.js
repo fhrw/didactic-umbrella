@@ -12,6 +12,12 @@ export default function slotReducer(state = initialState, action) {
       return { slots: action.payload, loading: false, hasErrors: false }
     case 'getSlotsFailure':
       return { ...state, loading: false, hasErrors: false }
+    case 'addSlot':
+      return { ...state, loading: true, hasErrors: false }
+    case 'addSlotSuccess':
+      return { slots: action.payload, loading: false, hasErrors: false }
+    case 'addSlotFailure':
+      return { ...state, loading: false, hasErrors: true }
     default:
       return state
   }

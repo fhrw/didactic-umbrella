@@ -33,7 +33,8 @@ func DeleteSingleSlot(c *gin.Context) {
 	}
 
 	models.DB.Delete(&slot)
-	c.JSON(http.StatusOK, gin.H{"data": "success"})
+
+	c.JSON(http.StatusOK, gin.H{"data": slot})
 
 }
 
