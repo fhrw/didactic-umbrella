@@ -118,6 +118,16 @@ func TestHistoryOrder(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": histMap})
 }
 
+func reduceHist(h []models.History, w int) []models.History {
+	var a []models.History
+	for _, v := range h {
+		if v.Week < w {
+			a = append(a, v)
+		}
+	}
+	return a
+}
+
 func createWeights(slots []models.Slot, constraints []string, history []string) []int {
 	weights := []int{}
 	for _, s := range slots {
