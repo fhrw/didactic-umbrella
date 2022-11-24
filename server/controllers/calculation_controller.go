@@ -94,8 +94,28 @@ func CalculateTimetable(c *gin.Context) {
 			}
 		}
 
-		c.JSON(http.StatusOK, gin.H{"data": updatedHistory})
+		c.JSON(http.StatusOK, gin.H{"data": updatedHistory, "constraints": constraintMap, "historymap": histMap, "solve": solve, "weights": m})
 	}
+}
+
+func TestHistoryOrder(c *gin.Context) {
+	tId := c.Param("teacher_id")
+
+	var students []models.Student
+	models.DB.Where(map[string]interface{}{"Teacher_id": tId}).Find(&students)
+
+	var history []models.History
+	for _, s := range students {
+		var currHistory []models.History
+		models.DB.Where(map[string]interface{}{"Student_id": s.Student_id}).Find(&currHistory)
+		for _, h := range currHistory {
+			history = append(history, h)
+		}
+	}
+
+	histMap := makeHistMap(history)
+
+	c.JSON(http.StatusOK, gin.H{"data": histMap})
 }
 
 func createWeights(slots []models.Slot, constraints []string, history []string) []int {

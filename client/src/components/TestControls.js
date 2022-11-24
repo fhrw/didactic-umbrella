@@ -64,8 +64,9 @@ function TestControls({ dispatch, loading, students, slots, history, constraints
   function renderSlots(student_id) {
     if (slots.loading || constraints.loading) return <p>Loading...</p>
     if (slots.hasErrors || constraints.hasErrors) return <p>Unable to display</p>
+    // if (!slots.length) return
     const constrainedSlots = constraints.filter((constraint) => constraint.student_id === student_id)
-    return slots.map((slot) => {
+    return slots?.map?.((slot) => {
       const matches = constrainedSlots.filter((constraint) => constraint.slot === slot.slot)
       if (matches.length) {
         const target = matches[0].constraint_id
@@ -87,8 +88,11 @@ function TestControls({ dispatch, loading, students, slots, history, constraints
     const slotOptions = ["monday 1", "monday 2", "monday 3", "monday 4", "monday 5", "monday 6"]
     if (slots.loading) return <p>Loading..</p>
     if (slots.hasErrors) return <p>Unable to display...</p>
-    if (!slots.length) return
-    // broken
+    return slotOptions.map((slot) => {
+      const selected = slots.findIndex((s) => s.slot === slot)
+      if (selected != -1) return <button onClick={() => teacherToggleOff(slots[selected].slot_id)}>selected: {slots[selected].slot}</button>
+      return <button onClick={() => teacherToggleOn(teacher.teacher_id, ui.week, slot)}>{slot}</button>
+    })
   }
 
   return (

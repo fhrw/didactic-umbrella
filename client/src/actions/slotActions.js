@@ -71,9 +71,7 @@ export function fetchDeleteSlot(slot_id) {
     try {
       const response = await fetch(`http://localhost:3000/slot/${slot_id}`, { method: "DELETE" })
       const data = await response.json()
-      const { slots } = getState().slots.slots
-      const filtered = slots.filter((slot) => slot.slot_id !== data.data.slot_id)
-      dispatch(deleteSlotSuccess(filtered))
+      dispatch(deleteSlotSuccess(data.data))
     } catch (error) {
       dispatch(deleteSlotFailure())
     }
