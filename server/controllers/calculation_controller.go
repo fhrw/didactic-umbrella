@@ -96,7 +96,7 @@ func CalculateTimetable(c *gin.Context) {
 			}
 		}
 
-		c.JSON(http.StatusOK, gin.H{"data": updatedHistory, "constraints": constraintMap, "historymap": histMap, "solve": solve, "weights": m})
+		c.JSON(http.StatusOK, gin.H{"data": updatedHistory})
 	}
 }
 
