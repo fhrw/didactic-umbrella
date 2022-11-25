@@ -96,7 +96,7 @@ func CalculateTimetable(c *gin.Context) {
 			}
 		}
 
-		c.JSON(http.StatusOK, gin.H{"data": updatedHistory})
+		c.JSON(http.StatusOK, gin.H{"data": updatedHistory, "weights": m})
 	}
 }
 
@@ -135,7 +135,7 @@ func createWeights(slots []models.Slot, constraints []string, history []string) 
 	for _, s := range slots {
 		score := 0
 		if strArrIdx(constraints, s.Slot) != -1 {
-			score += 100
+			score += 300
 		}
 		histI := strArrIdx(history, s.Slot)
 		histScore := calcHistScore(histI, len(history), 100)
