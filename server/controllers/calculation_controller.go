@@ -38,9 +38,11 @@ func CalculateTimetable(c *gin.Context) {
 		}
 	}
 
+	prevHist := reduceHist(history, weekInt)
+
 	// this could use refactoring
 	constraintMap := makeConstraintsMap(allConstraints)
-	histMap := makeHistMap(history)
+	histMap := makeHistMap(prevHist)
 
 	m := [][]int{}
 	for _, student := range students {
