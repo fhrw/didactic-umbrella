@@ -49,8 +49,8 @@ function TestControls({ dispatch, loading, students, slots, history, constraints
   function renderTimetable() {
     if (history.loading) return <p>Loading...</p>
     if (history.hasErrors) return <p>Unable to display</p>
-    const viewTimeable = history.filter((item) => item.week === ui.week)
-    return viewTimeable.map((item) => <p>{item.slot}: student {item.student_id}</p>)
+    const filteredHist = history.filter((item) => item.week === ui.week)
+    return filteredHist.map((item) => <p>{item.slot}: student {item.student_id}</p>)
   }
 
   function handleToggleOff(constraint_id) {
@@ -72,7 +72,7 @@ function TestControls({ dispatch, loading, students, slots, history, constraints
         const target = matches[0].constraint_id
         return <button onClick={() => handleToggleOff(target)}>constrained: {slot.slot}</button>
       }
-      return <button onClick={() => handleToggleOn(1, ui.week, slot.slot)}>{slot.slot}</button>
+      return <button onClick={() => handleToggleOn(student_id, ui.week, slot.slot)}>{slot.slot}</button>
     })
   }
 
@@ -113,6 +113,10 @@ function TestControls({ dispatch, loading, students, slots, history, constraints
       <div>
         <p>constrained slots (student 1):</p>
         {renderSlots(1)}
+      </div>
+      <div>
+        <p>constrained slots (student 2):</p>
+        {renderSlots(2)}
       </div>
       <div>
         <p>teacher slots</p>

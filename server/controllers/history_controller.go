@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"net/http"
+	"sort"
 	"strconv"
 
 	"github.com/fhrw/timetable-server/models"
@@ -45,6 +46,15 @@ func GetAllHistory(c *gin.Context) {
 
 	c.JSON(http.StatusOK, gin.H{"data": histories})
 
+}
+
+func sortDayArr(arr []models.History) []models.History {
+	sort.SliceStable(arr, func(i, j int) bool {
+		a := arr[i].Slot[len(arr[i].Slot)-1:]
+		b := arr[j].Slot[len(arr[j].Slot)-1:]
+		return a < b
+	})
+	return arr
 }
 
 func GetPastHistory(c *gin.Context) {
