@@ -22,3 +22,4 @@ export default function historyReducer(state = initialState, action) {
       return state
   }
 }
+

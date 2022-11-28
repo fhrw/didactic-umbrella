@@ -96,7 +96,10 @@ func CalculateTimetable(c *gin.Context) {
 			}
 		}
 
-		c.JSON(http.StatusOK, gin.H{"data": updatedHistory, "weights": m})
+		dayMap := SortDayMap(CreateDayMap(updatedHistory))
+		sortedHist := ExplodeDayMap(dayMap)
+
+		c.JSON(http.StatusOK, gin.H{"data": sortedHist, "weights": m})
 	}
 }
 

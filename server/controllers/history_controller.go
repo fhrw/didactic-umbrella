@@ -1,9 +1,11 @@
 package controllers
 
 import (
+	"fmt"
 	"net/http"
 	"sort"
 	"strconv"
+	"strings"
 
 	"github.com/fhrw/timetable-server/models"
 	"github.com/gin-gonic/gin"
@@ -48,13 +50,47 @@ func GetAllHistory(c *gin.Context) {
 
 }
 
-func sortDayArr(arr []models.History) []models.History {
+func SortDayArr(arr []models.History) []models.History {
+	fmt.Println(arr)
 	sort.SliceStable(arr, func(i, j int) bool {
 		a := arr[i].Slot[len(arr[i].Slot)-1:]
 		b := arr[j].Slot[len(arr[j].Slot)-1:]
 		return a < b
 	})
+	fmt.Println(arr)
 	return arr
+}
+
+func CreateDayMap(arr []models.History) map[string][]models.History {
+	m := make(map[string][]models.History)
+	for _, h := range arr {
+		key := strings.TrimSpace(h.Slot[:len(h.Slot)-1])
+		_, ok := m[key]
+		if ok {
+			m[key] = append(m[key], h)
+		} else {
+			m[key] = []models.History{h}
+		}
+	}
+	return m
+}
+
+func SortDayMap(dayMap map[string][]models.History) map[string][]models.History {
+	for _, d := range dayMap {
+		d = SortDayArr(d)
+	}
+	return dayMap
+}
+
+func ExplodeDayMap(m map[string][]models.History) []models.History {
+	keys := []string{"monday", "tuesday", "wednesday", "thursday", "friday"}
+	var sorted []models.History
+	for _, k := range keys {
+		for _, v := range m[k] {
+			sorted = append(sorted, v)
+		}
+	}
+	return sorted
 }
 
 func GetPastHistory(c *gin.Context) {
