@@ -41,7 +41,6 @@ func main() {
 	router.GET("/slots/:teacher_id/:week", controllers.GetWeekSlots)
 
 	router.GET("/timetable/:teacher_id/:week", controllers.CalculateTimetable)
-	router.GET("/test/:teacher_id/:week", controllers.TestHistoryOrder)
 
 	router.Run("localhost:3000")
 }

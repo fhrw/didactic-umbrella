@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"fmt"
 	"net/http"
 	"sort"
 	"strconv"
@@ -46,18 +45,19 @@ func GetAllHistory(c *gin.Context) {
 
 	models.DB.Find(&histories)
 
-	c.JSON(http.StatusOK, gin.H{"data": histories})
+	dayMap := SortDayMap(CreateDayMap(histories))
+	sortedHist := ExplodeDayMap(dayMap)
+
+	c.JSON(http.StatusOK, gin.H{"data": sortedHist})
 
 }
 
 func SortDayArr(arr []models.History) []models.History {
-	fmt.Println(arr)
 	sort.SliceStable(arr, func(i, j int) bool {
 		a := arr[i].Slot[len(arr[i].Slot)-1:]
 		b := arr[j].Slot[len(arr[j].Slot)-1:]
 		return a < b
 	})
-	fmt.Println(arr)
 	return arr
 }
 
@@ -119,5 +119,8 @@ func GetRelevantHistory(c *gin.Context) {
 		}
 	}
 
-	c.JSON(http.StatusOK, gin.H{"data": filteredHistory})
+	dayMap := SortDayMap(CreateDayMap(filteredHistory))
+	sortedHist := ExplodeDayMap(dayMap)
+
+	c.JSON(http.StatusOK, gin.H{"data": sortedHist})
 }

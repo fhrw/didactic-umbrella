@@ -103,26 +103,6 @@ func CalculateTimetable(c *gin.Context) {
 	}
 }
 
-func TestHistoryOrder(c *gin.Context) {
-	tId := c.Param("teacher_id")
-
-	var students []models.Student
-	models.DB.Where(map[string]interface{}{"Teacher_id": tId}).Find(&students)
-
-	var history []models.History
-	for _, s := range students {
-		var currHistory []models.History
-		models.DB.Where(map[string]interface{}{"Student_id": s.Student_id}).Find(&currHistory)
-		for _, h := range currHistory {
-			history = append(history, h)
-		}
-	}
-
-	histMap := makeHistMap(history)
-
-	c.JSON(http.StatusOK, gin.H{"data": histMap})
-}
-
 func reduceHist(h []models.History, w int) []models.History {
 	var a []models.History
 	for _, v := range h {

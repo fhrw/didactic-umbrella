@@ -1,12 +1,16 @@
 import { Outlet } from "react-router-dom";
+import { connect } from "react-redux"
 
-function Layout() {
+function Layout(teacher) {
   return (
     <div>
-      layout
       <Outlet />
     </div>
   )
 }
 
-export default Layout
+const mapStateToProps = (state) => ({
+  teacher: state.teacher.teacher
+})
+
+export default connect(mapStateToProps)(Layout)
