@@ -1,12 +1,15 @@
 import { useEffect } from "react"
 import { connect } from "react-redux"
+//actions
 import { fetchStudents } from '../actions/studentsActions'
 import { fetchTeacher, modifyTeacher } from '../actions/teacherActions'
 import { addConstraint, fetchAddConstraint, fetchConstraints, fetchDelConstraint } from '../actions/constraintsActions'
 import { decrementWeek, incrementWeek, setWeek } from '../actions/uiActions'
 import { fetchHistory, fetchRecalc } from '../actions/historyActions'
 import { fetchSlots, fetchAddSlot, fetchDeleteSlot } from '../actions/slotActions'
+//components
 import WeekNav from "./WeekNav"
+import TeacherControls from "./TeacherControls"
 
 function Dashboard({ dispatch, ui, teacher }) {
   // get students, teacher and histo related to them
@@ -24,7 +27,7 @@ function Dashboard({ dispatch, ui, teacher }) {
 
   return <div>
     <WeekNav />
-    <p>something else</p>
+    <TeacherControls />
   </div>
 }
 
