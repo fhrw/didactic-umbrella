@@ -10,6 +10,7 @@ import { fetchSlots, fetchAddSlot, fetchDeleteSlot } from '../actions/slotAction
 //components
 import WeekNav from "./WeekNav"
 import TeacherControls from "./TeacherControls"
+import Timetable from "./Timetable"
 
 function Dashboard({ dispatch, ui, teacher }) {
   // get students, teacher and histo related to them
@@ -28,6 +29,7 @@ function Dashboard({ dispatch, ui, teacher }) {
   return <div>
     <WeekNav />
     <TeacherControls />
+    <Timetable />
   </div>
 }
 
