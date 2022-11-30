@@ -6,7 +6,6 @@ import { Routes, Route } from "react-router-dom"
 import Layout from './components/Layout'
 import Dashboard from './components/Dashboard'
 import { NoMatch } from './components/NoMatch'
-import TestControls from './components/TestControls'
 
 const App = () => {
 	return (
