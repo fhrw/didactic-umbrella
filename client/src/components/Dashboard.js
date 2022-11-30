@@ -11,6 +11,7 @@ import WeekNav from "./WeekNav"
 import TeacherControls from "./TeacherControls"
 import Timetable from "./Timetable"
 import StudentDash from "./StudentDash"
+import ConstraintPicker from "./ConstraintPicker"
 
 function Dashboard({ dispatch, ui, teacher }) {
 	// get students, teacher and histo related to them
@@ -31,6 +32,7 @@ function Dashboard({ dispatch, ui, teacher }) {
 		<TeacherControls />
 		<Timetable />
 		<StudentDash />
+		<ConstraintPicker student_id={1} />
 	</div>
 }
 
