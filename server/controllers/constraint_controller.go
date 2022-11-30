@@ -6,6 +6,8 @@ import (
 
 	"github.com/fhrw/timetable-server/models"
 	"github.com/gin-gonic/gin"
+	"sort"
+	"strings"
 )
 
 func CreateConstraint(c *gin.Context) {
@@ -43,7 +45,10 @@ func GetAllConstraints(c *gin.Context) {
 
 	models.DB.Find(&constraints)
 
-	c.JSON(http.StatusOK, gin.H{"data": constraints})
+	dayMap := SortConsMap(CreateConsMap(constraints))
+	sortedConst := ExplodeConsMap(dayMap)
+
+	c.JSON(http.StatusOK, gin.H{"data": sortedConst})
 
 }
 
@@ -53,5 +58,54 @@ func GetWeekConstraints(c *gin.Context) {
 
 	models.DB.Where("week = ?", week).Find(&constraints)
 
-	c.JSON(http.StatusOK, gin.H{"data": constraints})
+	if len(constraints) < 1 {
+		c.JSON(http.StatusOK, gin.H{"data": constraints})
+		return
+	}
+
+	dayMap := SortConsMap(CreateConsMap(constraints))
+	sortedConst := ExplodeConsMap(dayMap)
+
+	c.JSON(http.StatusOK, gin.H{"data": sortedConst})
+}
+
+func SortConsArr(arr []models.Constraint) []models.Constraint {
+	sort.SliceStable(arr, func(i, j int) bool {
+		a := arr[i].Slot[len(arr[i].Slot)-1:]
+		b := arr[j].Slot[len(arr[j].Slot)-1:]
+		return a < b
+	})
+	return arr
+}
+
+func CreateConsMap(arr []models.Constraint) map[string][]models.Constraint {
+	m := make(map[string][]models.Constraint)
+	for _, h := range arr {
+		key := strings.TrimSpace(h.Slot[:len(h.Slot)-1])
+		_, ok := m[key]
+		if ok {
+			m[key] = append(m[key], h)
+		} else {
+			m[key] = []models.Constraint{h}
+		}
+	}
+	return m
+}
+
+func SortConsMap(consMap map[string][]models.Constraint) map[string][]models.Constraint {
+	for _, d := range consMap {
+		d = SortConsArr(d)
+	}
+	return consMap
+}
+
+func ExplodeConsMap(m map[string][]models.Constraint) []models.Constraint {
+	keys := []string{"monday", "tuesday", "wednesday", "thursday", "friday"}
+	var sorted []models.Constraint
+	for _, k := range keys {
+		for _, v := range m[k] {
+			sorted = append(sorted, v)
+		}
+	}
+	return sorted
 }
