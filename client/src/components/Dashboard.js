@@ -33,8 +33,6 @@ function Dashboard({ dispatch, ui, teacher }) {
     <WeekNav />
     <TeacherControls />
     <Timetable />
-    <StudentDash />
-    <AddStudent />
   </div>
 }
 
