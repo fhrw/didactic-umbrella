@@ -59,3 +59,16 @@ export function fetchAddStudent(student) {
     }
   }
 }
+
+export const deleteStudent = () => ({
+  type: "deleteStudent"
+})
+
+export const deleteStudentSuccess = (student) => ({
+  type: "deleteStudentSuccess",
+  payload: student
+})
+
+export const deleteStudentFailure = () => ({
+  type: "deleteStudentFailure"
+})

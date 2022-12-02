@@ -85,6 +85,6 @@ func DeleteSingleStudent(c *gin.Context) {
 	}
 
 	models.DB.Delete(&student)
-	c.JSON(http.StatusOK, gin.H{"data": "success!"})
+	c.JSON(http.StatusOK, gin.H{"data": student})
 
 }
