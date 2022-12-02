@@ -1,4 +1,4 @@
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { connect } from "react-redux"
 //actions
 import { fetchStudents } from '../actions/studentsActions'
@@ -14,8 +14,10 @@ import StudentDash from "./StudentDash"
 import ConstraintPicker from "./ConstraintPicker"
 import TeacherPicker from "./TeacherPicker"
 import AddStudent from "./AddStudent"
+import DashContext from "./DashContext"
 
 function Dashboard({ dispatch, ui, teacher }) {
+  const [uiState, setUiState] = useState("idle")
   // get students, teacher and histo related to them
   useEffect(() => {
     dispatch(fetchStudents())
@@ -29,11 +31,16 @@ function Dashboard({ dispatch, ui, teacher }) {
     dispatch(fetchSlots(teacher.teacher_id, ui.week))
   }, [dispatch, ui.week])
 
-  return <div>
-    <WeekNav />
-    <TeacherControls />
-    <Timetable />
-  </div>
+  return (
+    <DashContext.Provider >
+      <div>
+        <WeekNav />
+        <TeacherControls />
+        <Timetable />
+        <StudentDash />
+      </div>
+    </DashContext.Provider >
+  )
 }
 
 const mapStateToProps = (state) => ({
