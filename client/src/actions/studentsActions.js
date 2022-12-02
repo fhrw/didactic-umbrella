@@ -72,3 +72,16 @@ export const deleteStudentSuccess = (student) => ({
 export const deleteStudentFailure = () => ({
   type: "deleteStudentFailure"
 })
+
+export function fetchDeleteStudent(student) {
+  return async (dispatch) => {
+    dispatch(deleteStudent())
+    try {
+      const response = await fetch(`http://localhost:3000/${student.student_id}`, { method: "DELETE" })
+      const data = await response.json()
+      dispatch(deleteStudentSuccess(data.data))
+    } catch (error) {
+      dispatch(deleteStudentFailure())
+    }
+  }
+}
