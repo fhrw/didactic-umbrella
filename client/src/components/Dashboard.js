@@ -32,7 +32,7 @@ function Dashboard({ dispatch, ui, teacher }) {
   }, [dispatch, ui.week])
 
   return (
-    <DashContext.Provider >
+    <DashContext.Provider value={{ uiState, setUiState }}>
       <div>
         <WeekNav />
         <TeacherControls />
