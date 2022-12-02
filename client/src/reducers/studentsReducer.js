@@ -14,6 +14,12 @@ export default function studentsReducer(state = initialState, action) {
       return { students: action.payload, loading: false, hasErrors: false }
     case actions.GET_STUDENTS_FAILURE:
       return { ...state, loading: false, hasErrors: true }
+    case "addStudent":
+      return { ...state, loading: true }
+    case "addStudentSuccess":
+      return { students: [...state.students, action.payload], loading: false, hasErrors: false }
+    case "addStudentFailure":
+      return { ...state, loading: false, hasErrors: true }
     default:
       return state
   }

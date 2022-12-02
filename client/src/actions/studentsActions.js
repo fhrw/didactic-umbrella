@@ -32,3 +32,30 @@ export function fetchStudents() {
     }
   }
 }
+
+export const addStudent = () => ({
+  type: "addStudent"
+})
+
+export const addStudentSuccess = (student) => ({
+  type: "addStudentSuccess",
+  payload: student
+})
+
+export const addStudentFailure = () => ({
+  type: "addStudentFailure"
+})
+
+export function fetchAddStudent(student) {
+  return async (dispatch) => {
+    dispatch(addStudent())
+    try {
+      const body = { teacher_id: student.teacher_id, first_name: student.firstName, last_name: student.lastName, school: student.school }
+      const response = await fetch('http://localhost:3000/students', { method: 'POST', body: JSON.stringify(body) })
+      const data = await response.json()
+      dispatch(addStudentSuccess(data.data))
+    } catch (error) {
+      dispatch(addStudentFailure())
+    }
+  }
+}
