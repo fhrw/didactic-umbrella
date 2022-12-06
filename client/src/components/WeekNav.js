@@ -1,4 +1,5 @@
 import { connect } from "react-redux"
+
 import { setWeek } from '../actions/uiActions'
 
 function WeekNav({ dispatch, ui, teacher, loading, hasErrors }) {

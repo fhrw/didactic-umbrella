@@ -27,6 +27,7 @@ function Student(student, constraints, dispatch) {
     <div>
       <p>{name}</p>
       <button onClick={handleDelete}>delete me</button>
+      <button>edit me</button>
       <div>{constraints.map(c => <p>{c.slot}</p>)}</div>
     </div>
   )
