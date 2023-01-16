@@ -40,9 +40,8 @@ function ConstraintPicker({ dispatch, constraints, student_id, loading, hasError
   if (hasErrors) return <p>Error...</p>
 
   function handleOn(student_id, week, slot) {
-    if (ui.week == 0) {
-      return
-    }
+    if (ui.week == 0) return
+    if (student_id == 0) return
     dispatch(fetchAddConstraint(student_id, week, slot))
   }
 
