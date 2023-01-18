@@ -1,7 +1,7 @@
 import * as action from '../actions/uiActions'
 
 export const initialState = {
-  week: 0
+  week: 1
 }
 
 export default function uiReducer(state = initialState, action) {

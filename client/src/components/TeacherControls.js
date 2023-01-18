@@ -8,7 +8,7 @@ import { fetchRecalc } from '../actions/historyActions'
 import SlotPicker from "./SlotPicker"
 import { useContext } from "react"
 
-function TeacherControls({ dispatch, teacher, ui }) {
+function TeacherControls({ dispatch, teacher, slots, students, ui }) {
   const viewState = useContext(DashContext)
 
   function handleAdd() {
@@ -22,6 +22,7 @@ function TeacherControls({ dispatch, teacher, ui }) {
   }
 
   function handleCalc() {
+    if (slots.length != students.length) return
     dispatch(fetchRecalc(teacher.teacher_id, ui.week))
   }
 
@@ -43,6 +44,8 @@ function TeacherControls({ dispatch, teacher, ui }) {
 
 const mapStateToProps = (state) => ({
   teacher: state.teacher.teacher,
+  slots: state.slots.slots,
+  students: state.students.students,
   ui: { week: state.uiData.week },
   loading: state.teacher.loading,
   hasError: state.teacher.hasErrors
