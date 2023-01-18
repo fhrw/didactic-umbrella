@@ -32,12 +32,13 @@ function Dashboard({ dispatch, ui, teacher }) {
 
   return (
     <DashProvider>
-      <div>
+      <div className="h-screen">
+        <div className="flex flex-col items-center gap-y-4 z-20">
+          <TeacherControls />
+          <Timetable />
+          <StudentDash />
+        </div>
         <WeekNav />
-        <TeacherControls />
-        <Timetable />
-        <StudentDash />
-        <AddStudent />
       </div>
     </DashProvider>
   )

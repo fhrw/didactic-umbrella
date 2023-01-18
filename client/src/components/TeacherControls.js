@@ -32,11 +32,13 @@ function TeacherControls({ dispatch, teacher, slots, students, ui }) {
   }
 
   return (
-    <div>
-      <button onClick={handleDel}>Delete Week</button>
-      <button onClick={handleAdd}>Add Week</button>
-      <button onClick={handleCalc}>Calculate Timetable</button>
-      <button onClick={handleToggleSlot}>Edit Slots</button>
+    <div className="flex flex-col gap-y-4">
+      <div className="flex gap-x-2">
+        <button onClick={handleDel}>Delete Week</button>
+        <button onClick={handleAdd}>Add Week</button>
+        <button onClick={handleCalc}>Calculate Timetable</button>
+        <button onClick={handleToggleSlot}>Edit Slots</button>
+      </div>
       {viewState.mode === 'edit_teacher' && <SlotPicker teacher_id={teacher.teacher_id} />}
     </div>
   )

@@ -11,7 +11,7 @@ function StudentDash({ dispatch, students, constraints }) {
   if (students.hasErrors) return <p>Error loading students</p>
   if (!students.length) return <p>No students to display</p>
   return (
-    <div>
+    <div className='w-1/2 flex flex-col gap-y-4'>
       {students.map((student) => {
         const stuCons = constraints.filter((constraint) => constraint.student_id == student.student_id)
         return Student(student, stuCons, dispatch, viewState.setMode, viewState.setStudentTarget)
@@ -34,11 +34,13 @@ function Student(student, constraints, dispatch, editFunc, targetFunc) {
   }
 
   return (
-    <div>
-      <p>{name}</p>
-      <button onClick={handleDelete}>delete me</button>
-      <button onClick={handleEdit}>edit me</button>
-      <div>{constraints.map(c => <p>{c.slot}</p>)}</div>
+    <div className='w-full flex justify-between'>
+      <div className='flex flex-col items-start'>
+        <p>{name}</p>
+        <button onClick={handleDelete}>delete me</button>
+        <button onClick={handleEdit}>edit me</button>
+      </div>
+      <div className='flex flex-wrap gap-x-1 w-3/4'>{constraints.map(c => <p>{c.slot}</p>)}</div>
     </div>
   )
 }

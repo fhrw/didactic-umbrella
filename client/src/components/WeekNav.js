@@ -9,14 +9,16 @@ function WeekNav({ dispatch, ui, teacher, loading, hasErrors }) {
     }
   }
   function handleDec() {
-    if (ui.week > 0) {
+    if (ui.week > 1) {
       dispatch(setWeek(-1))
     }
   }
   return (
-    <div>
-      <button onClick={handleDec}>prev</button>
-      <button onClick={handleInc}>next</button>
+    <div className="fixed top-0 w-full h-screen flex items-center px-6 pointer-events-none">
+      <div className="w-full flex justify-between pointer-events-auto">
+        <button onClick={handleDec}>prev</button>
+        <button onClick={handleInc}>next</button>
+      </div>
     </div>
   )
 }
