@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 
-import { fetchAddSlot, fetchDeleteSlot } from '../actions/slotActions'
+import { fetchAddSlot, fetchDeleteSlot, fetchPrevSlots } from '../actions/slotActions'
 function SlotPicker({ dispatch, slots, teacher_id, loading, hasErrors, ui }) {
   const generic = [
     ["monday 1",
@@ -48,9 +48,14 @@ function SlotPicker({ dispatch, slots, teacher_id, loading, hasErrors, ui }) {
     dispatch(fetchDeleteSlot(slot_id))
   }
 
+  function handleCopyLast() {
+    dispatch(fetchPrevSlots(teacher_id, ui.week))
+  }
+
 
   return (
     <div>
+      <button onClick={handleCopyLast}>Copy Prev.</button>
       {generic.map((day) => {
         return <div>
           {day.map((slot) => {
