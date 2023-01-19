@@ -1,12 +1,18 @@
 package controllers
 
 import (
+	"fmt"
 	"net/http"
 	"strconv"
 
 	"github.com/fhrw/timetable-server/models"
 	"github.com/gin-gonic/gin"
 )
+
+type RequestInfo struct {
+	Teacher_id string `json:"teacher_id"`
+	Week       int    `json:"week"`
+}
 
 func CreateSlot(c *gin.Context) {
 
@@ -47,6 +53,36 @@ func GetAllSlots(c *gin.Context) {
 func GetWeekSlots(c *gin.Context) {
 	teacherId := c.Param("teacher_id")
 	week := c.Param("week")
+
+	var slots []models.Slot
+	models.DB.Where(map[string]interface{}{"Teacher_id": teacherId, "Week": week}).Find(&slots)
+
+	c.JSON(http.StatusOK, gin.H{"data": slots})
+}
+
+func CopyPrev(c *gin.Context) {
+	teacherId := c.Param("teacher_id")
+	week := c.Param("week")
+	weekInt, err := strconv.Atoi(week)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, nil)
+		return
+	}
+	prev := fmt.Sprint(weekInt - 1)
+
+	var old []models.Slot
+	models.DB.Where(map[string]interface{}{"Teacher_id": teacherId, "Week": week}).Find(&old)
+	for _, s := range old {
+		models.DB.Delete(&s)
+	}
+
+	var prevSlots []models.Slot
+	models.DB.Where(map[string]interface{}{"Teacher_id": teacherId, "Week": prev}).Find(&prevSlots)
+
+	for _, p := range prevSlots {
+		slot := models.Slot{Teacher_id: p.Teacher_id, Week: weekInt, Slot: p.Slot}
+		models.DB.Create(&slot)
+	}
 
 	var slots []models.Slot
 	models.DB.Where(map[string]interface{}{"Teacher_id": teacherId, "Week": week}).Find(&slots)
