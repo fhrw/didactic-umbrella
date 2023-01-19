@@ -66,7 +66,7 @@ export const deleteSlotFailure = () => ({
 })
 
 export function fetchDeleteSlot(slot_id) {
-  return async (dispatch, getState) => {
+  return async (dispatch) => {
     dispatch(deleteSlot())
     try {
       const response = await fetch(`http://localhost:3000/slot/${slot_id}`, { method: "DELETE" })
@@ -74,6 +74,32 @@ export function fetchDeleteSlot(slot_id) {
       dispatch(deleteSlotSuccess(data.data))
     } catch (error) {
       dispatch(deleteSlotFailure())
+    }
+  }
+}
+
+export const copyPrevSlots = () => ({
+  type: "copyPrevSlots"
+})
+
+export const copyPrevSlotsSuccess = (slots) => ({
+  type: "copyPrevSlotsSuccess",
+  payload: slots
+})
+
+export const copyPrevSlotsFailure = () => ({
+  type: "copyPrevSlotsFailure"
+})
+
+export function fetchPrevSlots(teacher_id, week) {
+  return async (dispatch) => {
+    dispatch(copyPrevSlots())
+    try {
+      const response = await fetch(`http://localhost:3000/copyprev/${teacher_id}/${week}`)
+      const data = await response.json()
+      dispatch(copyPrevSlotsSuccess(data.data))
+    } catch (error) {
+      dispatch(copyPrevSlotsFailure())
     }
   }
 }
