@@ -25,6 +25,12 @@ export default function slotReducer(state = initialState, action) {
       return { slots: filtered, loading: false, hasErrors: false }
     case 'deleteSlotFailure':
       return { ...state, loading: false, hasErrors: true }
+    case 'copyPrevSlots':
+      return { ...state, loading: true }
+    case 'copyPrevSlotsSuccess':
+      return { slots: action.payload, loading: false, hasErrors: false }
+    case 'copyPrevSlotsFailure':
+      return { ...state, loading: false, hasErrors: true }
     default:
       return state
   }
