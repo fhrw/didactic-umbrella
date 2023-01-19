@@ -23,7 +23,6 @@ function TeacherControls({ dispatch, teacher, slots, students, ui }) {
 
   function handleCalc() {
     if (slots.length != students.length) return
-    if (ui.week != teacher.term_length) return
     dispatch(fetchRecalc(teacher.teacher_id, ui.week))
   }
 
