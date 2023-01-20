@@ -1,12 +1,13 @@
+import { useContext } from "react"
 import { connect } from "react-redux"
 
 import { DashContext } from './DashContext'
+import SlotPicker from "./SlotPicker"
 
 // actions
 import { modifyTeacher } from '../actions/teacherActions'
+import { setWeek } from '../actions/uiActions.js'
 import { fetchRecalc } from '../actions/historyActions'
-import SlotPicker from "./SlotPicker"
-import { useContext } from "react"
 
 function TeacherControls({ dispatch, teacher, slots, students, ui }) {
   const viewState = useContext(DashContext)
@@ -14,11 +15,13 @@ function TeacherControls({ dispatch, teacher, slots, students, ui }) {
   function handleAdd() {
     const n = { ...teacher, term_length: teacher.term_length + 1 }
     dispatch(modifyTeacher(teacher.teacher_id, n))
+    dispatch(setWeek(1))
   }
 
   function handleDel() {
     const n = { ...teacher, term_length: teacher.term_length - 1 }
     dispatch(modifyTeacher(teacher.teacher_id, n))
+    dispatch(setWeek(-1))
   }
 
   function handleCalc() {
