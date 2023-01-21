@@ -2,6 +2,7 @@ import { connect } from "react-redux"
 
 function Timetable({ students, history, ui, loading, hasErrors }) {
   if (students.loading) return <p>Loading</p>
+
   function renderTimetable() {
     if (history.loading) return <p>Loading data</p>
     if (history.hasErrors) return <p>Error in history data</p>
@@ -26,6 +27,66 @@ function Timetable({ students, history, ui, loading, hasErrors }) {
   )
 }
 
+const AllSlots = [
+  ["monday 1",
+    "monday 2",
+    "monday 3",
+    "monday 4",
+    "monday 5",
+    "monday 6"],
+  ["tuesday 1",
+    "tuesday 2",
+    "tuesday 3",
+    "tuesday 4",
+    "tuesday 5",
+    "tuesday 6"],
+  ["wednesday 1",
+    "wednesday 2",
+    "wednesday 3",
+    "wednesday 4",
+    "wednesday 5",
+    "wednesday 6"],
+  ["thursday 1",
+    "thursday 2",
+    "thursday 3",
+    "thursday 4",
+    "thursday 5",
+    "thursday 6"],
+  ["friday 1",
+    "friday 2",
+    "friday 3",
+    "friday 4",
+    "friday 5",
+    "friday 6"]
+]
+
+function NewTimetable({ students, history, ui, loading, hasErrors }) {
+  if (loading.students) return <p>Loading</p>
+  if (hasErrors.students) return <p>Error in history data</p>
+  if (loading.history) return <p>Loading data</p>
+  if (hasErrors.history) return <p>Error in history data</p>
+
+  const allocatedSlots = history.filter(s => s.week === ui.week)
+
+  return (
+    <div className="flex gap-x-2">
+      {AllSlots.map(d => {
+        return (
+          <div>
+            <h4>{d[0].slice(0, d[0].length - 2)}</h4>
+            {d.map(s => {
+              return (
+                <p>{s.slice(s.length - 1)}</p>
+              )
+            }
+            )}
+          </div>
+        )
+      })}
+    </div >
+  )
+}
+
 const mapStateToProps = (state) => ({
   students: state.students.students,
   history: state.history.history,
@@ -35,4 +96,6 @@ const mapStateToProps = (state) => ({
 
 })
 
-export default connect(mapStateToProps)(Timetable)
+
+export const ConnectedTimetable = connect(mapStateToProps)(Timetable)
+export const ConnectedNewTimetable = connect(mapStateToProps)(NewTimetable)
