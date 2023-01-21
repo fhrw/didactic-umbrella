@@ -9,7 +9,7 @@ import { fetchSlots } from '../actions/slotActions'
 //components
 import WeekNav from "./WeekNav"
 import TeacherControls from "./TeacherControls"
-import Timetable from "./Timetable"
+import { ConnectedTimetable, ConnectedNewTimetable } from "./Timetable"
 import StudentDash from "./StudentDash"
 import ConstraintPicker from "./ConstraintPicker"
 import TeacherPicker from "./TeacherPicker"
@@ -35,7 +35,7 @@ function Dashboard({ dispatch, ui, teacher }) {
       <div className="h-screen">
         <div className="flex flex-col items-center gap-y-4 z-20">
           <TeacherControls />
-          <Timetable />
+          <ConnectedNewTimetable />
           <StudentDash />
         </div>
         <WeekNav />
