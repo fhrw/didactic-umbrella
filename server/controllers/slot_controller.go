@@ -32,9 +32,9 @@ func CreateSlot(c *gin.Context) {
 func DeleteSingleSlot(c *gin.Context) {
 
 	var slot models.Slot
-	target, _ := strconv.Atoi(c.Param("slot_id"))
-	if err := models.DB.Where("slot_id = ?", target).First(&slot).Error; err != nil {
-		c.AbortWithStatusJSON(http.StatusNotFound, gin.H{"error": "record not found"})
+	target := c.Param("slot_id")
+	if err := models.DB.Where("id = ?", target).First(&slot).Error; err != nil {
+		c.AbortWithStatus(http.StatusNotFound)
 		return
 	}
 
