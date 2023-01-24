@@ -37,6 +37,7 @@ function Dashboard({ dispatch, ui, teacher }) {
           <TeacherControls />
           <ConnectedNewTimetable />
           <StudentDash />
+          <AddStudent />
         </div>
         <WeekNav />
       </div>
