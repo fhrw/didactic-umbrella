@@ -2,7 +2,6 @@ package controllers
 
 import (
 	"net/http"
-	"strconv"
 
 	"github.com/fhrw/timetable-server/models"
 	"github.com/gin-gonic/gin"
@@ -14,7 +13,7 @@ func CreateConstraint(c *gin.Context) {
 
 	var input models.ConstraintInput
 	if err := c.ShouldBindJSON(&input); err != nil {
-		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		c.AbortWithStatus(http.StatusBadRequest)
 		return
 	}
 
@@ -28,9 +27,9 @@ func CreateConstraint(c *gin.Context) {
 func DeleteSingleConstraint(c *gin.Context) {
 
 	var constraint models.Constraint
-	target, _ := strconv.Atoi(c.Param("constraint_id"))
-	if err := models.DB.Where("constraint_id = ?", target).First(&constraint).Error; err != nil {
-		c.AbortWithStatusJSON(http.StatusNotFound, gin.H{"error": "record not found"})
+	target := c.Param("constraint_id")
+	if err := models.DB.Where("id = ?", target).First(&constraint).Error; err != nil {
+		c.AbortWithStatus(http.StatusNotFound)
 		return
 	}
 
