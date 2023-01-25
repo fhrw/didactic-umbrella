@@ -21,7 +21,7 @@ export default function slotReducer(state = initialState, action) {
     case 'deleteSlot':
       return { ...state, loading: true, hasErrors: false }
     case 'deleteSlotSuccess':
-      const filtered = state.slots.filter((slot) => slot.slot_id != action.payload.slot_id)
+      const filtered = state.slots.filter((slot) => slot.id != action.payload.id)
       return { slots: filtered, loading: false, hasErrors: false }
     case 'deleteSlotFailure':
       return { ...state, loading: false, hasErrors: true }
