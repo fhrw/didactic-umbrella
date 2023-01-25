@@ -62,7 +62,7 @@ func SortDayArr(arr []models.History) []models.History {
 }
 
 func CreateDayMap(arr []models.History) map[string][]models.History {
-	m := make(map[string][]models.History)
+	var m map[string][]models.History
 	for _, h := range arr {
 		key := strings.TrimSpace(h.Slot[:len(h.Slot)-1])
 		_, ok := m[key]
@@ -117,6 +117,11 @@ func GetRelevantHistory(c *gin.Context) {
 				filteredHistory = append(filteredHistory, hist)
 			}
 		}
+	}
+
+	if len(filteredHistory) < 1 {
+		c.JSON(http.StatusOK, gin.H{"data": filteredHistory})
+		return
 	}
 
 	dayMap := SortDayMap(CreateDayMap(filteredHistory))
