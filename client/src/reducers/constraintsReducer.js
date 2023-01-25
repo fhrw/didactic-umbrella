@@ -23,7 +23,7 @@ export default function constraintsReducer(state = initialState, action) {
     case actions.DELETE_CONSTRAINT:
       return { ...state, loading: true }
     case actions.DELETE_CONSTRAINT_SUCCESS:
-      const newConstraints = state.constraints.filter((constraint) => constraint.constraint_id != action.payload.constraint_id)
+      const newConstraints = state.constraints.filter((constraint) => constraint.id != action.payload.id)
       return { constraints: newConstraints, loading: false, hasErrors: false }
     case actions.DELETE_CONSTRAINT_FAILURE:
       return { ...state, loading: false, hasErrors: true }
