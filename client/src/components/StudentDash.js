@@ -13,7 +13,7 @@ function StudentDash({ dispatch, students, constraints }) {
   return (
     <div className='w-1/2 flex flex-col gap-y-4'>
       {students.map((student) => {
-        const stuCons = constraints.filter((constraint) => constraint.student_id == student.student_id)
+        const stuCons = constraints.filter((constraint) => constraint.student_id == student.id)
         return Student(student, stuCons, dispatch, viewState.setMode, viewState.setStudentTarget)
       })}
       {viewState.mode === "edit" && <ConstraintPicker student_id={viewState.studentTarget} />}
@@ -25,12 +25,12 @@ function Student(student, constraints, dispatch, editFunc, targetFunc) {
   const name = student.first_name + ' ' + student.last_name
 
   function handleDelete() {
-    dispatch(fetchDeleteStudent(student.student_id))
+    dispatch(fetchDeleteStudent(student.id))
   }
 
   function handleEdit() {
     editFunc("edit")
-    targetFunc(student.student_id)
+    targetFunc(student.id)
   }
 
   return (
