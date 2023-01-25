@@ -54,7 +54,7 @@ func GetSingleTeacher(c *gin.Context) {
 
 	var teacher models.Teacher
 
-	if err := models.DB.Where("teacher_id = ?", id).First(&teacher).Error; err != nil {
+	if err := models.DB.Where("ID = ?", id).First(&teacher).Error; err != nil {
 		c.AbortWithStatusJSON(http.StatusNotFound, gin.H{"error": "record not found"})
 		return
 	}
