@@ -10,7 +10,6 @@ import (
 )
 
 func CreateConstraint(c *gin.Context) {
-
 	var input models.ConstraintInput
 	if err := c.ShouldBindJSON(&input); err != nil {
 		c.AbortWithStatus(http.StatusBadRequest)
@@ -21,11 +20,9 @@ func CreateConstraint(c *gin.Context) {
 	models.DB.Create(&constraint)
 
 	c.JSON(http.StatusOK, gin.H{"data": constraint})
-
 }
 
 func DeleteSingleConstraint(c *gin.Context) {
-
 	var constraint models.Constraint
 	target := c.Param("constraint_id")
 	if err := models.DB.Where("id = ?", target).First(&constraint).Error; err != nil {
@@ -35,7 +32,6 @@ func DeleteSingleConstraint(c *gin.Context) {
 
 	models.DB.Delete(&constraint)
 	c.JSON(http.StatusOK, gin.H{"data": constraint})
-
 }
 
 func GetAllConstraints(c *gin.Context) {
