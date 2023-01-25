@@ -14,7 +14,7 @@ function TeacherControls({ dispatch, teacher, slots, students, ui }) {
 
   function handleAdd() {
     const n = { ...teacher, term_length: teacher.term_length + 1 }
-    dispatch(modifyTeacher(teacher.teacher_id, n))
+    dispatch(modifyTeacher(teacher.id, n))
     dispatch(setWeek(1))
   }
 
@@ -26,7 +26,7 @@ function TeacherControls({ dispatch, teacher, slots, students, ui }) {
 
   function handleCalc() {
     if (slots.length != students.length) return
-    dispatch(fetchRecalc(teacher.teacher_id, ui.week))
+    dispatch(fetchRecalc(teacher.id, ui.week))
   }
 
   function handleToggleSlot() {
@@ -47,7 +47,7 @@ function TeacherControls({ dispatch, teacher, slots, students, ui }) {
         }
         <button onClick={handleToggleSlot}>Edit Slots</button>
       </div>
-      {viewState.mode === 'edit_teacher' && <SlotPicker teacher_id={teacher.teacher_id} />}
+      {viewState.mode === 'edit_teacher' && <SlotPicker teacher_id={teacher.id} />}
     </div>
   )
 }

@@ -4,7 +4,7 @@ const DashContext = React.createContext()
 
 function DashProvider({ children }) {
   const [mode, setMode] = React.useState("idle")
-  const [studentTarget, setStudentTarget] = React.useState(0)
+  const [studentTarget, setStudentTarget] = React.useState("")
   const value = { mode, setMode, studentTarget, setStudentTarget }
   return <DashContext.Provider value={value}>{children}</DashContext.Provider>
 }

@@ -16,7 +16,7 @@ function AddStudent({ dispatch, teacher, loading, hasErrors }) {
 
   function handleSubmit(event) {
     event.preventDefault()
-    const body = { ...studentInfo, teacher_id: teacher.teacher_id }
+    const body = { ...studentInfo, teacher_id: teacher.id }
     dispatch(fetchAddStudent(body))
     setStudentInfo({ ...studentInfo, firstName: "", lastName: "" })
   }

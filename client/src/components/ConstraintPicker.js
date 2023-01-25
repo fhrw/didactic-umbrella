@@ -40,8 +40,6 @@ function ConstraintPicker({ dispatch, constraints, student_id, loading, hasError
   if (hasErrors) return <p>Error...</p>
 
   function handleOn(student_id, week, slot) {
-    if (ui.week == 0) return
-    if (student_id == 0) return
     dispatch(fetchAddConstraint(student_id, week, slot))
   }
 
@@ -59,7 +57,7 @@ function ConstraintPicker({ dispatch, constraints, student_id, loading, hasError
         return <div>
           {day.map((slot) => {
             const constrained = constrainedSlots.find(c => c.slot === slot)
-            if (constrained) return <button onClick={() => handleOff(constrained.constraint_id)}>constrained: {slot}</button>
+            if (constrained) return <button onClick={() => handleOff(constrained.id)}>constrained: {slot}</button>
             return <button onClick={() => handleOn(student_id, ui.week, slot)}>{slot}</button>
           })}
         </div>

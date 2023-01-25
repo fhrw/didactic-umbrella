@@ -60,7 +60,7 @@ function SlotPicker({ dispatch, slots, teacher_id, loading, hasErrors, ui }) {
         return <div>
           {day.map((slot) => {
             const selected = slots?.find(s => s.slot === slot)
-            if (selected) return <button onClick={() => handleOff(selected.slot_id)}>selected: {slot}</button>
+            if (selected) return <button onClick={() => handleOff(selected.id)}>selected: {slot}</button>
             return <button onClick={() => handleOn(teacher_id, ui.week, slot)}>{slot}</button>
           })}
         </div>
