@@ -23,7 +23,7 @@ export default function studentsReducer(state = initialState, action) {
     case "deleteStudent":
       return { ...state, loading: true }
     case "deleteStudentSuccess":
-      const filtered = state.students.filter(student => student.student_id != action.payload.student_id)
+      const filtered = state.students.filter(student => student.id != action.payload.id)
       return { students: filtered, loading: false, hasErrors: false }
     case "deleteStudentFailure":
       return { ...state, loading: false, hasErrors: true }
