@@ -25,7 +25,7 @@ func main() {
 	// router.PATCH("/teacher/:teacher_id", controllers.UpdateTeacher)
 	// router.GET("/teacher/:teacher_id", controllers.GetSingleTeacher)
 
-	// router.POST("/constraints", controllers.CreateConstraint)
+	router.POST("/constraints", controllers.CreateConstraint)
 	// router.GET("/constraints", controllers.GetAllConstraints)
 	// router.DELETE("/constraints/:constraint_id", controllers.DeleteSingleConstraint)
 	// router.GET("/constraints/:week", controllers.GetWeekConstraints)

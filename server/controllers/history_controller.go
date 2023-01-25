@@ -113,7 +113,7 @@ func GetRelevantHistory(c *gin.Context) {
 	filteredHistory := []models.History{}
 	for _, hist := range allHistory {
 		for _, stu := range students {
-			if hist.Student_id == stu.Student_id {
+			if hist.Student_id == stu.ID {
 				filteredHistory = append(filteredHistory, hist)
 			}
 		}

@@ -15,7 +15,7 @@ func CreateTeacher(c *gin.Context) {
 		return
 	}
 
-	teacher := models.Teacher{First_name: input.First_name, Last_name: input.Last_name, School: input.School, Term_length: input.Term_length}
+	teacher := models.Teacher{First_name: input.First_name, Last_name: input.Last_name, School: input.School}
 	models.DB.Create(&teacher)
 
 	c.JSON(http.StatusOK, gin.H{"data": teacher})
@@ -43,7 +43,7 @@ func UpdateTeacher(c *gin.Context) {
 		return
 	}
 
-	updatedTeacher := models.Teacher{First_name: input.First_name, Last_name: input.Last_name, School: input.School, Term_length: input.Term_length}
+	updatedTeacher := models.Teacher{First_name: input.First_name, Last_name: input.Last_name, School: input.School}
 	models.DB.Model(&teacher).Updates(&updatedTeacher)
 
 	c.JSON(http.StatusOK, gin.H{"data": teacher})

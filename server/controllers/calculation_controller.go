@@ -7,6 +7,7 @@ import (
 	"github.com/fhrw/hungarian-algolang"
 	"github.com/fhrw/timetable-server/models"
 	"github.com/gin-gonic/gin"
+	"github.com/google/uuid"
 )
 
 func CalculateTimetable(c *gin.Context) {
@@ -27,12 +28,12 @@ func CalculateTimetable(c *gin.Context) {
 	var history []models.History
 	for _, student := range students {
 		var constraints []models.Constraint
-		models.DB.Where(map[string]interface{}{"Student_id": student.Student_id, "Week": week}).Find(&constraints)
+		models.DB.Where(map[string]interface{}{"Student_id": student.ID, "Week": week}).Find(&constraints)
 		for _, c := range constraints {
 			allConstraints = append(allConstraints, c)
 		}
 		var currHistory []models.History
-		models.DB.Where(map[string]interface{}{"Student_id": student.Student_id}).Find(&currHistory)
+		models.DB.Where(map[string]interface{}{"Student_id": student.ID}).Find(&currHistory)
 		for _, h := range currHistory {
 			history = append(history, h)
 		}
@@ -46,8 +47,8 @@ func CalculateTimetable(c *gin.Context) {
 
 	m := [][]int{}
 	for _, student := range students {
-		c := constraintMap[student.Student_id]
-		h := histMap[student.Student_id]
+		c := constraintMap[student.ID]
+		h := histMap[student.ID]
 		weights := createWeights(slots, c, h)
 		m = append(m, weights)
 	}
@@ -66,14 +67,14 @@ func CalculateTimetable(c *gin.Context) {
 		// create new entries
 		var histUpdates []models.HistoryInput
 		for i, assign := range solve {
-			h := models.HistoryInput{Student_id: students[i].Student_id, Week: weekInt, Slot: slots[assign].Slot}
+			h := models.HistoryInput{Student_id: students[i].ID, Week: weekInt, Slot: slots[assign].Slot}
 			histUpdates = append(histUpdates, h)
 		}
 
 		// delete old entries for the week involving curr studnets
 		for _, h := range history {
 			for _, stu := range students {
-				if h.Student_id == stu.Student_id && h.Week == weekInt {
+				if h.Student_id == stu.ID && h.Week == weekInt {
 					models.DB.Delete(&h)
 					break
 				}
@@ -90,7 +91,7 @@ func CalculateTimetable(c *gin.Context) {
 		var updatedHistory []models.History
 		for _, s := range students {
 			var stuHist []models.History
-			models.DB.Where(map[string]interface{}{"Student_id": s.Student_id}).Find(&stuHist)
+			models.DB.Where(map[string]interface{}{"Student_id": s.ID}).Find(&stuHist)
 			for _, h := range stuHist {
 				updatedHistory = append(updatedHistory, h)
 			}
@@ -148,9 +149,9 @@ func strArrIdx(a []string, s string) int {
 	return index
 }
 
-func makeConstraintsMap(c []models.Constraint) map[int][]string {
+func makeConstraintsMap(c []models.Constraint) map[uuid.UUID][]string {
 
-	m := make(map[int][]string)
+	m := make(map[uuid.UUID][]string)
 	for _, v := range c {
 
 		student := v.Student_id
@@ -167,9 +168,9 @@ func makeConstraintsMap(c []models.Constraint) map[int][]string {
 
 }
 
-func makeHistMap(h []models.History) map[int][]string {
+func makeHistMap(h []models.History) map[uuid.UUID][]string {
 
-	m := make(map[int][]string)
+	m := make(map[uuid.UUID][]string)
 	for _, v := range h {
 
 		student := v.Student_id
