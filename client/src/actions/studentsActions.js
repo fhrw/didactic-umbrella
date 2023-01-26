@@ -18,12 +18,12 @@ export const getStudentsFailure = () => ({
 
 // comine them all in an asynchronous thunk
 
-export function fetchStudents() {
+export function fetchStudents(teacher_id) {
   return async (dispatch) => {
     dispatch(getStudents())
 
     try {
-      const response = await fetch('http://localhost:3000/students', { method: "GET" })
+      const response = await fetch(`http://localhost:3000/students/teacher/${teacher_id}`, { method: "GET" })
       const data = await response.json()
 
       dispatch(getStudentsSuccess(data.data))

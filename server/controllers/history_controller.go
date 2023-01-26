@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"fmt"
 	"net/http"
 	"sort"
 	"strconv"
@@ -44,6 +45,12 @@ func GetAllHistory(c *gin.Context) {
 	var histories []models.History
 
 	models.DB.Find(&histories)
+
+	fmt.Println(histories)
+
+	if len(histories) < 1 {
+		c.JSON(http.StatusOK, gin.H{"data": histories})
+	}
 
 	dayMap := SortDayMap(CreateDayMap(histories))
 	sortedHist := ExplodeDayMap(dayMap)

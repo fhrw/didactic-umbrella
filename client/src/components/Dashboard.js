@@ -19,7 +19,7 @@ import { DashProvider, DashContext } from "./DashContext"
 function Dashboard({ dispatch, ui, teacher }) {
   // get students, teacher and histo related to them
   useEffect(() => {
-    dispatch(fetchStudents())
+    dispatch(fetchStudents("3ee26224-3ce8-447d-8035-eeaee9b35e8e"))
     dispatch(fetchTeacher("3ee26224-3ce8-447d-8035-eeaee9b35e8e"))
     dispatch(fetchHistory("3ee26224-3ce8-447d-8035-eeaee9b35e8e"))
   }, [dispatch])
