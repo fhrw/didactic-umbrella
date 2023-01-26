@@ -76,7 +76,6 @@ function NewTimetable({ students, history, ui, loading, hasErrors }) {
             <h4>{d[0].slice(0, d[0].length - 2)}</h4>
             {d.map(s => {
               const id = GetAllocatedId(allocatedSlots, s)
-              // const name = id != -1 ? students?.find(s => s.student_id === id).first_name : ""
               const name = students.find(s => s.id === id)
               const nameOut = name ? name.first_name : ""
               return (
@@ -93,7 +92,7 @@ function NewTimetable({ students, history, ui, loading, hasErrors }) {
 function GetAllocatedId(a_slots, t_slot) {
   const allocation = a_slots.find(s => s.slot === t_slot)
   if (!allocation) { return -1 }
-  return allocation.id
+  return allocation.student_id
 }
 
 const mapStateToProps = (state) => ({
