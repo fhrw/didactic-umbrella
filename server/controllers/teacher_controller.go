@@ -15,7 +15,7 @@ func CreateTeacher(c *gin.Context) {
 		return
 	}
 
-	teacher := models.Teacher{First_name: input.First_name, Last_name: input.Last_name, School: input.School}
+	teacher := models.Teacher{First_name: input.First_name, Last_name: input.Last_name, School: input.School, Term_length: input.Term_length}
 	models.DB.Create(&teacher)
 
 	c.JSON(http.StatusOK, gin.H{"data": teacher})
@@ -32,7 +32,7 @@ func GetAllTeachers(c *gin.Context) {
 
 func UpdateTeacher(c *gin.Context) {
 	var teacher models.Teacher
-	if err := models.DB.Where("teacher_id = ?", c.Param("teacher_id")).First(&teacher).Error; err != nil {
+	if err := models.DB.Where("ID = ?", c.Param("teacher_id")).First(&teacher).Error; err != nil {
 		c.AbortWithStatusJSON(http.StatusNotFound, gin.H{"error": "record not found"})
 		return
 	}
@@ -43,7 +43,7 @@ func UpdateTeacher(c *gin.Context) {
 		return
 	}
 
-	updatedTeacher := models.Teacher{First_name: input.First_name, Last_name: input.Last_name, School: input.School}
+	updatedTeacher := models.Teacher{First_name: input.First_name, Last_name: input.Last_name, School: input.School, Term_length: input.Term_length}
 	models.DB.Model(&teacher).Updates(&updatedTeacher)
 
 	c.JSON(http.StatusOK, gin.H{"data": teacher})

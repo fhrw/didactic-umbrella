@@ -36,7 +36,7 @@ func GetSingleStudent(c *gin.Context) {
 
 	var student models.Student
 
-	if err := models.DB.Where("student_id = ?", c.Param("student_id")).First(&student).Error; err != nil {
+	if err := models.DB.Where("ID = ?", c.Param("student_id")).First(&student).Error; err != nil {
 		c.AbortWithStatusJSON(http.StatusNotFound, gin.H{"error": "record not found"})
 		return
 	}
@@ -57,7 +57,7 @@ func GetTeachersStudents(c *gin.Context) {
 func UpdateStudent(c *gin.Context) {
 
 	var student models.Student
-	if err := models.DB.Where("student_id = ?", c.Param("student_id")).First(&student).Error; err != nil {
+	if err := models.DB.Where("ID = ?", c.Param("student_id")).First(&student).Error; err != nil {
 		c.AbortWithStatusJSON(http.StatusNotFound, gin.H{"error": "record not found"})
 		return
 	}
@@ -79,7 +79,7 @@ func UpdateStudent(c *gin.Context) {
 func DeleteSingleStudent(c *gin.Context) {
 
 	var student models.Student
-	if err := models.DB.Where("student_id = ?", c.Param("student_id")).First(&student).Error; err != nil {
+	if err := models.DB.Where("ID = ?", c.Param("student_id")).First(&student).Error; err != nil {
 		c.AbortWithStatusJSON(http.StatusNotFound, gin.H{"error": "record not found"})
 		return
 	}
