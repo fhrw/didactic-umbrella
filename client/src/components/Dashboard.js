@@ -20,15 +20,15 @@ function Dashboard({ dispatch, ui, teacher }) {
   // get students, teacher and histo related to them
   useEffect(() => {
     dispatch(fetchStudents())
-    dispatch(fetchTeacher("2aa8542c-2beb-4bb1-9e3b-379df52423c2"))
-    dispatch(fetchHistory("2aa8542c-2beb-4bb1-9e3b-379df52423c2"))
+    dispatch(fetchTeacher("3ee26224-3ce8-447d-8035-eeaee9b35e8e"))
+    dispatch(fetchHistory("3ee26224-3ce8-447d-8035-eeaee9b35e8e"))
   }, [dispatch])
 
   // get relevant constraints and slots
   useEffect(() => {
     dispatch(fetchConstraints(ui.week))
     // dispatch(fetchSlots(teacher.id, ui.week))
-    dispatch(fetchSlots("2aa8542c-2beb-4bb1-9e3b-379df52423c2", ui.week))
+    dispatch(fetchSlots("3ee26224-3ce8-447d-8035-eeaee9b35e8e", ui.week))
   }, [dispatch, ui.week])
 
   return (
