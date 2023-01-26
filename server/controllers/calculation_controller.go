@@ -12,7 +12,7 @@ import (
 
 func CalculateTimetable(c *gin.Context) {
 
-	teacherId, _ := strconv.Atoi(c.Param("teacher_id"))
+	teacherId := c.Param("teacher_id")
 	week := c.Param("week")
 	weekInt, err := strconv.Atoi(week)
 	if err != nil {
