@@ -20,7 +20,7 @@ function TeacherControls({ dispatch, teacher, slots, students, ui }) {
 
   function handleDel() {
     const n = { ...teacher, term_length: teacher.term_length - 1 }
-    dispatch(modifyTeacher(teacher.teacher_id, n))
+    dispatch(modifyTeacher(teacher.id, n))
     dispatch(setWeek(-1))
   }
 
