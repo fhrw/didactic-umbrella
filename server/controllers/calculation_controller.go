@@ -63,7 +63,6 @@ func CalculateTimetable(c *gin.Context) {
 			return
 		}
 
-		// modify history to match output
 		// create new entries
 		var histUpdates []models.HistoryInput
 		for i, assign := range solve {
