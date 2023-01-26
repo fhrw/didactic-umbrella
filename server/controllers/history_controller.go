@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"fmt"
 	"net/http"
 	"sort"
 	"strconv"
@@ -67,7 +66,8 @@ func SortDayArr(arr []models.History) []models.History {
 }
 
 func CreateDayMap(arr []models.History) map[string][]models.History {
-	var m map[string][]models.History
+	// var m map[string][]models.History
+	m := make(map[string][]models.History, 0)
 	for _, h := range arr {
 		key := strings.TrimSpace(h.Slot[:len(h.Slot)-1])
 		_, ok := m[key]
