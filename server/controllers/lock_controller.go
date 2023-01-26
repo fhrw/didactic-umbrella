@@ -1,0 +1,40 @@
+package controllers
+
+import (
+	"net/http"
+
+	"github.com/fhrw/timetable-server/models"
+	"github.com/gin-gonic/gin"
+	"github.com/google/uuid"
+)
+
+type LockRequest struct {
+	IDList []uuid.UUID `json:"idList" binding:"required"`
+	Week   int         `json:"week" binding:"required"`
+}
+
+func CreateLock(c *gin.Context) {
+	var input models.LockInput
+	if err := c.ShouldBindJSON(&input); err != nil {
+		c.AbortWithStatus(http.StatusBadRequest)
+		return
+	}
+
+	lock := models.Lock{Student_id: input.Student_id, Week: input.Week, Slot: input.Slot}
+	models.DB.Create(&lock)
+
+	c.JSON(http.StatusOK, gin.H{"data": lock})
+}
+
+func GetLocks(c *gin.Context) {
+
+}
+
+func DeleteLock(c *gin.Context) {
+	var lock models.Lock
+	if err := models.DB.Where("ID = ?", c.Param("lock_id")).First(&lock); err != nil {
+		c.AbortWithStatus(http.StatusNotFound)
+	}
+	models.DB.Delete(&lock)
+	c.JSON(http.StatusOK, gin.H{"data": lock})
+}
