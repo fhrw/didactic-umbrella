@@ -41,6 +41,10 @@ func main() {
 	router.GET("/slots/:teacher_id/:week", controllers.GetWeekSlots)
 	router.GET("/copyprev/:teacher_id/:week", controllers.CopyPrev)
 
+	router.POST("/create-lock", controllers.CreateLock)
+	router.GET("/get-locks", controllers.GetLocks)
+	router.DELETE("/delete-lock/:lock_id", controllers.DeleteLock)
+
 	router.GET("/timetable/:teacher_id/:week", controllers.CalculateTimetable)
 
 	router.Run("localhost:3000")
