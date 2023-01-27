@@ -19,6 +19,7 @@ func ConnectDatabase() {
 	db.AutoMigrate(&Slot{})
 	db.AutoMigrate(&Constraint{})
 	db.AutoMigrate(&History{})
+	db.AutoMigrate(&Lock{})
 
 	DB = db
 
