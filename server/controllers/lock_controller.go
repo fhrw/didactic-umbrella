@@ -20,6 +20,11 @@ func CreateLock(c *gin.Context) {
 		return
 	}
 
+	//cleanup old lock for student
+	var old []models.Lock
+	models.DB.Where("student_id = ?", input.Student_id).Where("week = ?", input.Week).Find(&old)
+	models.DB.Delete(&old)
+
 	lock := models.Lock{Student_id: input.Student_id, Week: input.Week, Slot: input.Slot}
 	models.DB.Create(&lock)
 
