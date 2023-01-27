@@ -39,6 +39,7 @@ function Student(student, constraints, dispatch, editFunc, targetFunc) {
         <p>{name}</p>
         <button onClick={handleDelete}>delete me</button>
         <button onClick={handleEdit}>edit me</button>
+        <button>lock</button>
       </div>
       <div className='flex flex-wrap gap-x-1 w-3/4'>{constraints.map(c => <p>{c.slot}</p>)}</div>
     </div>
