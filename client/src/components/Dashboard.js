@@ -15,6 +15,7 @@ import ConstraintPicker from "./ConstraintPicker"
 import TeacherPicker from "./TeacherPicker"
 import AddStudent from "./AddStudent"
 import { DashProvider, DashContext } from "./DashContext"
+import { fetchLocks } from "../actions/lockActions"
 
 function Dashboard({ dispatch, ui, teacher }) {
   // get students, teacher and histo related to them
@@ -27,8 +28,8 @@ function Dashboard({ dispatch, ui, teacher }) {
   // get relevant constraints and slots
   useEffect(() => {
     dispatch(fetchConstraints(ui.week))
-    // dispatch(fetchSlots(teacher.id, ui.week))
     dispatch(fetchSlots("3ee26224-3ce8-447d-8035-eeaee9b35e8e", ui.week))
+    dispatch(fetchLocks("3ee26224-3ce8-447d-8035-eeaee9b35e8e", ui.week))
   }, [dispatch, ui.week])
 
   return (
