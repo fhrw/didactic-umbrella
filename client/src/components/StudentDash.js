@@ -16,7 +16,8 @@ function StudentDash({ dispatch, students, constraints }) {
         const stuCons = constraints.filter((constraint) => constraint.student_id == student.id)
         return Student(student, stuCons, dispatch, viewState.setMode, viewState.setStudentTarget)
       })}
-      {viewState.mode === "edit" && <ConstraintPicker student_id={viewState.studentTarget} />}
+      {viewState.mode === "editConstraint" && <ConstraintPicker student_id={viewState.studentTarget} />}
+      {viewState.mode === "editLock" && <LockPicker student_id={viewState.studentTarget} />}
     </div>
   )
 }
@@ -29,7 +30,7 @@ function Student(student, constraints, dispatch, editFunc, targetFunc) {
   }
 
   function handleEdit() {
-    editFunc("edit")
+    editFunc("editConstraint")
     targetFunc(student.id)
   }
 
