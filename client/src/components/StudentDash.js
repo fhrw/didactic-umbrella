@@ -4,6 +4,7 @@ import { DashContext } from "./DashContext"
 import { fetchDeleteStudent } from '../actions/studentsActions'
 import { useContext } from 'react'
 import ConstraintPicker from './ConstraintPicker'
+import Lockpicker from './Lockpicker.js'
 
 function StudentDash({ dispatch, students, constraints }) {
   const viewState = useContext(DashContext)
