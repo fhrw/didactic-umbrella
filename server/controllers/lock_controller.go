@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"go/format"
 	"net/http"
 
 	"github.com/fhrw/timetable-server/models"
