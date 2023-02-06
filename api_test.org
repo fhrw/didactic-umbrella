@@ -1,0 +1,58 @@
+#+title: Api Test
+
+* Locks
+** Create Lock
+#+begin_src restclient
+POST http://localhost:3000/create-lock
+
+{"student_id": "29bede8b-5819-44cd-a1e3-ab360da55d4c", "week": 1, "slot": "monday 2"}
+#+end_src
+
+#+RESULTS:
+#+BEGIN_SRC js
+{
+  "data": {
+    "id": "1ffdb5ad-0987-4a19-b64c-2f389292a5fa",
+    "created_at": "2023-02-06T16:12:11.157369+11:00",
+    "updated_at": "2023-02-06T16:12:11.157369+11:00",
+    "student_id": "29bede8b-5819-44cd-a1e3-ab360da55d4c",
+    "week": 1,
+    "slot": "monday 2"
+  }
+}
+// POST http://localhost:3000/create-lock
+// HTTP/1.1 200 OK
+// Content-Type: application/json; charset=utf-8
+// Date: Mon, 06 Feb 2023 05:12:11 GMT
+// Content-Length: 229
+// Request duration: 0.006102s
+#+END_SRC
+
+** Get Locks rel to teacher
+#+begin_src restclient
+POST http://localhost:3000/get-locks
+
+{"teacher_id":"3ee26224-3ce8-447d-8035-eeaee9b35e8e", "week": 1}
+#+end_src
+
+#+RESULTS:
+#+BEGIN_SRC js
+{
+  "data": [
+    {
+      "id": "1ffdb5ad-0987-4a19-b64c-2f389292a5fa",
+      "created_at": "2023-02-06T16:12:11.157369+11:00",
+      "updated_at": "2023-02-06T16:12:11.157369+11:00",
+      "student_id": "29bede8b-5819-44cd-a1e3-ab360da55d4c",
+      "week": 1,
+      "slot": "monday 2"
+    }
+  ]
+}
+// GET http://localhost:3000/get-locks
+// HTTP/1.1 200 OK
+// Content-Type: application/json; charset=utf-8
+// Date: Mon, 06 Feb 2023 05:12:13 GMT
+// Content-Length: 231
+// Request duration: 0.004035s
+#+END_SRC
