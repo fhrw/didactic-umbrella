@@ -1,85 +1,89 @@
 export const getLocks = () => ({
-  type: "getLocks"
-})
+  type: "getLocks",
+});
 
 export const getLocksSuccess = (locks) => ({
   type: "getLocksSuccess",
-  payload: locks
-})
+  payload: locks,
+});
 
 export const getLocksFailure = () => ({
-  type: "getLocksFailure"
-})
+  type: "getLocksFailure",
+});
 
 export function fetchLocks(teacher_id, week) {
   return async (dispatch) => {
-    dispatch(getLocks())
+    dispatch(getLocks());
     try {
-      const body = { teacher_id: teacher_id, week: week }
-      const resp = await fetch('http://localhost:3000/get-locks', {
-        method: "GET",
-        body: JSON.stringify(body)
-      })
-      const data = await resp.json()
-      dispatch(getLocksSuccess(data.data))
+      const body = JSON.stringify({ teacher_id: teacher_id, week: week });
+      const resp = await fetch("http://localhost:3000/get-locks", {
+        method: "POST",
+        body: body,
+      });
+      const data = await resp.json();
+      dispatch(getLocksSuccess(data.data));
     } catch (error) {
-      dispatch(getLocksFailure())
+      dispatch(getLocksFailure());
     }
-  }
+  };
 }
 
 export const addLock = () => ({
-  type: "addLock"
-})
+  type: "addLock",
+});
 
 export const addLockSuccess = (lock) => ({
-  type: "addLockSuccess", payload: lock
-})
+  type: "addLockSuccess",
+  payload: lock,
+});
 
 export const addLockFailure = () => ({
-  type: "addLockFailure"
-})
+  type: "addLockFailure",
+});
 
 export function fetchAddLock(student_id, week, slot) {
   return async (dispatch) => {
-    dispatch(addLock())
+    dispatch(addLock());
     try {
-      const body = { student_id: student_id, week: week, slot: slot }
-      const resp = await fetch('http://localhost:3000/create-lock', {
+      const body = JSON.stringify({
+        student_id: student_id,
+        week: week,
+        slot: slot,
+      });
+      const resp = await fetch("http://localhost:3000/create-lock", {
         method: "POST",
-        body: JSON.stringify(body),
-      })
-      const data = await resp.json()
-      dispatch(addLockSuccess(data.data))
+        body: body,
+      });
+      const data = await resp.json();
+      dispatch(addLockSuccess(data.data));
     } catch (error) {
-      dispatch(addLockFailure())
+      dispatch(addLockFailure());
     }
-  }
+  };
 }
 
 export const deleteLock = () => ({
-  type: "deleteLock"
-})
+  type: "deleteLock",
+});
 
 export const deleteLockSuccess = (lock) => ({
-  type: "deleteLockSuccess", payload: lock
-})
+  type: "deleteLockSuccess",
+  payload: lock,
+});
 
 export const deleteLockFailure = () => ({
-  type: "deleteLockFailure"
-})
+  type: "deleteLockFailure",
+});
 
 export function fetchDeleteLock(lock_id) {
   return async (dispatch) => {
-    dispatch(deleteLock())
+    dispatch(deleteLock());
     try {
-      const resp = await fetch(`http://localhost:3000/delete-lock/${lock_id}`, {
-        method: "DELETE",
-      })
-      const data = await resp.json()
-      dispatch(deleteLockSuccess(data.data))
+      const resp = await fetch(`http://localhost:3000/delete-lock/${lock_id}`);
+      const data = await resp.json();
+      dispatch(deleteLockSuccess(data.data));
     } catch (error) {
-      dispatch(deleteLockFailure())
+      dispatch(deleteLockFailure());
     }
-  }
+  };
 }
