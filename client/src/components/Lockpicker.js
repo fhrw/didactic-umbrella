@@ -38,13 +38,29 @@ function LockPicker({ dispatch, locks, student_id, loading, hasErrors, ui }) {
     dispatch(fetchAddLock(student_id, week, slot));
   }
 
-  function handleOff(lock_id) {
-    dispatch(fetchDeleteLock(lock_id));
-  }
-
   const lockedSlot = locks.find((l) => {
-    return l.student.id === student_id;
+    return l.student_id === student_id;
   });
+
+  return (
+    <div>
+      {generic.map((day) => {
+        return (
+          <div>
+            {day.map((slot) => {
+              const locked = lockedSlot?.slot === slot;
+              if (locked) return <button>locked: {slot}</button>;
+              return (
+                <button onClick={() => handleOn(student_id, ui.week, slot)}>
+                  {slot}
+                </button>
+              );
+            })}
+          </div>
+        );
+      })}
+    </div>
+  );
 }
 
 const mapStateToProps = (state) => ({
