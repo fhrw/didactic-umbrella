@@ -26,6 +26,7 @@ func CalculateTimetable(c *gin.Context) {
 
 	var allConstraints []models.Constraint
 	var history []models.History
+	var locks []models.Lock
 	for _, student := range students {
 		var constraints []models.Constraint
 		models.DB.Where(map[string]interface{}{"Student_id": student.ID, "Week": week}).Find(&constraints)
@@ -37,6 +38,9 @@ func CalculateTimetable(c *gin.Context) {
 		for _, h := range currHistory {
 			history = append(history, h)
 		}
+		var lock models.Lock
+		models.DB.Where(map[string]interface{}{"Student_id": student.ID}).Find(&lock)
+		locks = append(locks, lock)
 	}
 
 	prevHist := reduceHist(history, weekInt)
