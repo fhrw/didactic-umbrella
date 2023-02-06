@@ -4,9 +4,9 @@ import { DashContext } from "./DashContext";
 import { fetchDeleteStudent } from "../actions/studentsActions";
 import { useContext } from "react";
 import ConstraintPicker from "./ConstraintPicker";
-import Lockpicker from "./Lockpicker.js";
+import LockPicker from "./Lockpicker.js";
 
-function StudentDash({ dispatch, students, constraints }) {
+function StudentDash({ dispatch, students, constraints, locks }) {
   const viewState = useContext(DashContext);
   if (students.loading) return <p>Loading students</p>;
   if (students.hasErrors) return <p>Error loading students</p>;
@@ -15,7 +15,7 @@ function StudentDash({ dispatch, students, constraints }) {
     <div className="w-1/2 flex flex-col gap-y-4">
       {students.map((student) => {
         const stuCons = constraints.filter(
-          (constraint) => constraint.student_id == student.id
+          (constraint) => constraint.student_id === student.id
         );
         return Student(
           student,
@@ -35,7 +35,7 @@ function StudentDash({ dispatch, students, constraints }) {
   );
 }
 
-function Student(student, constraints, dispatch, editFunc, targetFunc) {
+function Student(student, constraints, dispatch, setMode, targetFunc) {
   const name = student.first_name + " " + student.last_name;
 
   function handleDelete() {
@@ -43,7 +43,12 @@ function Student(student, constraints, dispatch, editFunc, targetFunc) {
   }
 
   function handleEdit() {
-    editFunc("editConstraint");
+    setMode("editConstraint");
+    targetFunc(student.id);
+  }
+
+  function handleLock() {
+    setMode("editLock");
     targetFunc(student.id);
   }
 
@@ -53,7 +58,7 @@ function Student(student, constraints, dispatch, editFunc, targetFunc) {
         <p>{name}</p>
         <button onClick={handleDelete}>delete me</button>
         <button onClick={handleEdit}>edit me</button>
-        <button>lock</button>
+        <button onClick={handleLock}>lock</button>
       </div>
       <div className="flex flex-wrap gap-x-1 w-3/4">
         {constraints.map((c) => (
@@ -67,13 +72,16 @@ function Student(student, constraints, dispatch, editFunc, targetFunc) {
 const mapStateToProps = (state) => ({
   students: state.students.students,
   constraints: state.constraints.constraints,
+  locks: state.locks.locks,
   loading: {
     students: state.students.loading,
     constraints: state.constraints.loading,
+    locks: state.locks.loading,
   },
   hasErrors: {
     students: state.students.hasErrors,
     constraints: state.constraints.hasErrors,
+    locks: state.locks.hasErrors,
   },
 });
 
