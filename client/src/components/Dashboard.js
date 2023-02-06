@@ -1,35 +1,36 @@
-import { useEffect, useState, useContext } from "react"
-import { connect } from "react-redux"
+import { useEffect, useState, useContext } from "react";
+import { connect } from "react-redux";
 //actions
-import { fetchStudents } from '../actions/studentsActions'
-import { fetchTeacher } from '../actions/teacherActions'
-import { fetchConstraints } from '../actions/constraintsActions'
-import { fetchHistory } from '../actions/historyActions'
-import { fetchSlots } from '../actions/slotActions'
+import { fetchStudents } from "../actions/studentsActions";
+import { fetchTeacher } from "../actions/teacherActions";
+import { fetchConstraints } from "../actions/constraintsActions";
+import { fetchHistory } from "../actions/historyActions";
+import { fetchSlots } from "../actions/slotActions";
+import { fetchLocks } from "../actions/lockActions";
 //components
-import WeekNav from "./WeekNav"
-import TeacherControls from "./TeacherControls"
-import { ConnectedTimetable, ConnectedNewTimetable } from "./Timetable"
-import StudentDash from "./StudentDash"
-import ConstraintPicker from "./ConstraintPicker"
-import TeacherPicker from "./TeacherPicker"
-import AddStudent from "./AddStudent"
-import { DashProvider, DashContext } from "./DashContext"
+import WeekNav from "./WeekNav";
+import TeacherControls from "./TeacherControls";
+import { ConnectedTimetable, ConnectedNewTimetable } from "./Timetable";
+import StudentDash from "./StudentDash";
+import ConstraintPicker from "./ConstraintPicker";
+import TeacherPicker from "./TeacherPicker";
+import AddStudent from "./AddStudent";
+import { DashProvider, DashContext } from "./DashContext";
 
 function Dashboard({ dispatch, ui, teacher }) {
   // get students, teacher and histo related to them
   useEffect(() => {
-    dispatch(fetchStudents("3ee26224-3ce8-447d-8035-eeaee9b35e8e"))
-    dispatch(fetchTeacher("3ee26224-3ce8-447d-8035-eeaee9b35e8e"))
-    dispatch(fetchHistory("3ee26224-3ce8-447d-8035-eeaee9b35e8e"))
-  }, [dispatch])
+    dispatch(fetchStudents("3ee26224-3ce8-447d-8035-eeaee9b35e8e"));
+    dispatch(fetchTeacher("3ee26224-3ce8-447d-8035-eeaee9b35e8e"));
+    dispatch(fetchHistory("3ee26224-3ce8-447d-8035-eeaee9b35e8e"));
+  }, [dispatch]);
 
-  // get relevant constraints and slots
+  // get relevant constraints and slots and locks
   useEffect(() => {
-    dispatch(fetchConstraints(ui.week))
-    // dispatch(fetchSlots(teacher.id, ui.week))
-    dispatch(fetchSlots("3ee26224-3ce8-447d-8035-eeaee9b35e8e", ui.week))
-  }, [dispatch, ui.week])
+    dispatch(fetchConstraints(ui.week));
+    dispatch(fetchSlots("3ee26224-3ce8-447d-8035-eeaee9b35e8e", ui.week));
+    dispatch(fetchLocks("3ee26224-3ce8-447d-8035-eeaee9b35e8e", ui.week));
+  }, [dispatch, ui.week]);
 
   return (
     <DashProvider>
@@ -43,18 +44,18 @@ function Dashboard({ dispatch, ui, teacher }) {
         <WeekNav />
       </div>
     </DashProvider>
-  )
+  );
 }
 
 const mapStateToProps = (state) => ({
-  students: state.students.students,
   teacher: state.teacher.teacher,
-  slots: state.slots.slots,
-  constraints: state.constraints.constraints,
-  history: state.history.history,
-  loading: { students: state.students.loading, constraints: state.constraints.loading, teacher: state.teacher.loading, slots: state.slots, loading: state.slots.loading, history: state.history.loading },
-  hasErrors: { students: state.students.hasErrors, constraints: state.constraints.hasErrors },
-  ui: { week: state.uiData.week }
-})
+  loading: {
+    teacher: state.teacher.loading,
+  },
+  hasErrors: {
+    teacher: state.teacher.hasErrors,
+  },
+  ui: { week: state.uiData.week },
+});
 
-export default connect(mapStateToProps)(Dashboard) 
+export default connect(mapStateToProps)(Dashboard);
