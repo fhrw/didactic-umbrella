@@ -68,34 +68,34 @@ GET http://localhost:3000/timetable/:teacher/1
 {
   "data": [
     {
-      "id": "3361cfa3-1a55-4a84-a78f-28413084972a",
-      "created_at": "2023-02-07T11:49:35.539294+11:00",
-      "updated_at": "2023-02-07T11:49:35.539294+11:00",
-      "student_id": "29bede8b-5819-44cd-a1e3-ab360da55d4c",
+      "id": "32e59626-7167-4a39-b42d-19d1e727e88d",
+      "created_at": "2023-02-07T13:18:23.710769+11:00",
+      "updated_at": "2023-02-07T13:18:23.710769+11:00",
+      "student_id": "176748f6-67d1-4abb-a846-f0bb32e2c035",
       "week": 1,
-      "slot": "monday 2"
+      "slot": "monday 1"
     },
     {
-      "id": "472911bf-4a16-4c15-81ba-32a97d62596b",
-      "created_at": "2023-02-07T11:53:35.618637+11:00",
-      "updated_at": "2023-02-07T11:53:35.618637+11:00",
-      "student_id": "176748f6-67d1-4abb-a846-f0bb32e2c035",
+      "id": "a7801841-2f6d-4425-9670-f6dcb9d1c072",
+      "created_at": "2023-02-07T13:18:23.711853+11:00",
+      "updated_at": "2023-02-07T13:18:23.711853+11:00",
+      "student_id": "29bede8b-5819-44cd-a1e3-ab360da55d4c",
       "week": 1,
       "slot": "monday 2"
     }
   ],
   "weights": [
     [
-      300
+      0
     ]
   ]
 }
 // GET http://localhost:3000/timetable/3ee26224-3ce8-447d-8035-eeaee9b35e8e/1
 // HTTP/1.1 200 OK
 // Content-Type: application/json; charset=utf-8
-// Date: Tue, 07 Feb 2023 00:53:35 GMT
-// Content-Length: 470
-// Request duration: 0.010330s
+// Date: Tue, 07 Feb 2023 02:18:23 GMT
+// Content-Length: 468
+// Request duration: 0.015197s
 #+END_SRC
 * History
 ** Del with id
@@ -107,12 +107,12 @@ DELETE http://localhost:3000/history/:id
 #+RESULTS:
 #+BEGIN_SRC js
 {
-  "error": "record not found"
+  "data": "success"
 }
-// DELETE http://localhost:3000/history/c2e2c7f0-c829-4127-a940-aa6236d90ada
-// HTTP/1.1 404 Not Found
+// DELETE http://localhost:3000/history/3361cfa3-1a55-4a84-a78f-28413084972a
+// HTTP/1.1 200 OK
 // Content-Type: application/json; charset=utf-8
-// Date: Tue, 07 Feb 2023 00:57:07 GMT
-// Content-Length: 28
-// Request duration: 0.003982s
+// Date: Tue, 07 Feb 2023 01:00:25 GMT
+// Content-Length: 18
+// Request duration: 0.008354s
 #+END_SRC
