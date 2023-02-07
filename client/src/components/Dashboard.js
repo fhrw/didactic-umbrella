@@ -16,7 +16,6 @@ import ConstraintPicker from "./ConstraintPicker";
 import TeacherPicker from "./TeacherPicker";
 import AddStudent from "./AddStudent";
 import { DashProvider, DashContext } from "./DashContext";
-import { fetchLocks } from "../actions/lockActions";
 
 function Dashboard({ dispatch, ui, teacher }) {
   // get students, teacher and histo related to them
