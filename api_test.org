@@ -40,19 +40,79 @@ POST http://localhost:3000/get-locks
 {
   "data": [
     {
-      "id": "1ffdb5ad-0987-4a19-b64c-2f389292a5fa",
-      "created_at": "2023-02-06T16:12:11.157369+11:00",
-      "updated_at": "2023-02-06T16:12:11.157369+11:00",
+      "id": "c2e2c7f0-c829-4127-a940-aa6236d90ada",
+      "created_at": "2023-02-07T10:30:24.730863+11:00",
+      "updated_at": "2023-02-07T10:30:24.730863+11:00",
       "student_id": "29bede8b-5819-44cd-a1e3-ab360da55d4c",
       "week": 1,
-      "slot": "monday 2"
+      "slot": "monday 4"
     }
   ]
 }
-// GET http://localhost:3000/get-locks
+// POST http://localhost:3000/get-locks
 // HTTP/1.1 200 OK
 // Content-Type: application/json; charset=utf-8
-// Date: Mon, 06 Feb 2023 05:12:13 GMT
+// Date: Tue, 07 Feb 2023 00:22:00 GMT
 // Content-Length: 231
-// Request duration: 0.004035s
+// Request duration: 0.004083s
+#+END_SRC
+* Calculation
+** Calculate
+#+begin_src restclient
+:teacher = 3ee26224-3ce8-447d-8035-eeaee9b35e8e
+GET http://localhost:3000/timetable/:teacher/1
+#+end_src
+
+#+RESULTS:
+#+BEGIN_SRC js
+{
+  "data": [
+    {
+      "id": "3361cfa3-1a55-4a84-a78f-28413084972a",
+      "created_at": "2023-02-07T11:49:35.539294+11:00",
+      "updated_at": "2023-02-07T11:49:35.539294+11:00",
+      "student_id": "29bede8b-5819-44cd-a1e3-ab360da55d4c",
+      "week": 1,
+      "slot": "monday 2"
+    },
+    {
+      "id": "472911bf-4a16-4c15-81ba-32a97d62596b",
+      "created_at": "2023-02-07T11:53:35.618637+11:00",
+      "updated_at": "2023-02-07T11:53:35.618637+11:00",
+      "student_id": "176748f6-67d1-4abb-a846-f0bb32e2c035",
+      "week": 1,
+      "slot": "monday 2"
+    }
+  ],
+  "weights": [
+    [
+      300
+    ]
+  ]
+}
+// GET http://localhost:3000/timetable/3ee26224-3ce8-447d-8035-eeaee9b35e8e/1
+// HTTP/1.1 200 OK
+// Content-Type: application/json; charset=utf-8
+// Date: Tue, 07 Feb 2023 00:53:35 GMT
+// Content-Length: 470
+// Request duration: 0.010330s
+#+END_SRC
+* History
+** Del with id
+#+begin_src restclient
+:id = 3361cfa3-1a55-4a84-a78f-28413084972a
+DELETE http://localhost:3000/history/:id
+#+end_src
+
+#+RESULTS:
+#+BEGIN_SRC js
+{
+  "error": "record not found"
+}
+// DELETE http://localhost:3000/history/c2e2c7f0-c829-4127-a940-aa6236d90ada
+// HTTP/1.1 404 Not Found
+// Content-Type: application/json; charset=utf-8
+// Date: Tue, 07 Feb 2023 00:57:07 GMT
+// Content-Length: 28
+// Request duration: 0.003982s
 #+END_SRC
