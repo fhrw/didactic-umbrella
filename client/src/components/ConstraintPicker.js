@@ -66,6 +66,11 @@ function ConstraintPicker({ dispatch, constraints, student_id, loading, hasError
   )
 }
 
-const mapStateToProps = (state) => ({ constraints: state.constraints.constraints, loading: state.constraints.loading, hasErrors: state.constraints.hasErrors, ui: { week: state.uiData.week } })
+const mapStateToProps = (state) => ({
+  constraints: state.constraints.constraints,
+  loading: state.constraints.loading,
+  hasErrors: state.constraints.hasErrors,
+  ui: { week: state.uiData.week }
+})
 
 export default connect(mapStateToProps)(ConstraintPicker)
