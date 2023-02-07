@@ -41,7 +41,7 @@ func GetLocks(c *gin.Context) {
 	var students []models.Student
 	models.DB.Where("teacher_id = ?", req.Teacher_id).Find(&students)
 
-	var locks []models.Lock
+	locks := []models.Lock{}
 	for _, s := range students {
 		var currLock models.Lock
 		if err := models.DB.Where("student_id = ?", s.ID).Where("week = ?", req.Week).First(&currLock).Error; err != nil {
