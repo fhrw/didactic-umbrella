@@ -19,15 +19,58 @@ func CalculateTimetable(c *gin.Context) {
 		panic(err)
 	}
 
-	var slots []models.Slot
-	models.DB.Where(map[string]interface{}{"Teacher_id": teacherId, "Week": week}).Find(&slots)
-	var students []models.Student
-	models.DB.Where(map[string]interface{}{"Teacher_id": teacherId}).Find(&students)
+	var allSlots []models.Slot
+	models.DB.Where(map[string]interface{}{"Teacher_id": teacherId, "Week": week}).Find(&allSlots)
+	var allStudents []models.Student
+	models.DB.Where(map[string]interface{}{"Teacher_id": teacherId}).Find(&allStudents)
+
+	var locks []models.Lock
+	for _, student := range allStudents {
+		var lock models.Lock
+		models.DB.Where(map[string]interface{}{"Student_id": student.ID}).Find(&lock)
+		locks = append(locks, lock)
+	}
+
+	//remove locked slots
+	var openSlots []models.Slot
+	for _, s := range allSlots {
+		var f bool
+		for _, l := range locks {
+			if l.Slot == s.Slot {
+				f = true
+				break
+			}
+		}
+		if !f {
+			openSlots = append(openSlots, s)
+		}
+	}
+
+	var unlockedStudents []models.Student
+	for _, student := range allStudents {
+		var found bool
+		for _, lock := range locks {
+			if lock.Student_id == student.ID {
+				found = true
+				break
+			}
+		}
+		if !found {
+			unlockedStudents = append(unlockedStudents, student)
+		}
+	}
+
+	var history []models.History
+	for _, s := range allStudents {
+		var currHistory []models.History
+		models.DB.Where(map[string]interface{}{"Student_id": s.ID}).Find(&currHistory)
+		for _, h := range currHistory {
+			history = append(history, h)
+		}
+	}
 
 	var allConstraints []models.Constraint
-	var history []models.History
-	var locks []models.Lock
-	for _, student := range students {
+	for _, student := range unlockedStudents {
 		var constraints []models.Constraint
 		models.DB.Where(map[string]interface{}{"Student_id": student.ID, "Week": week}).Find(&constraints)
 		for _, c := range constraints {
@@ -38,9 +81,6 @@ func CalculateTimetable(c *gin.Context) {
 		for _, h := range currHistory {
 			history = append(history, h)
 		}
-		var lock models.Lock
-		models.DB.Where(map[string]interface{}{"Student_id": student.ID}).Find(&lock)
-		locks = append(locks, lock)
 	}
 
 	prevHist := reduceHist(history, weekInt)
@@ -50,61 +90,66 @@ func CalculateTimetable(c *gin.Context) {
 	histMap := makeHistMap(prevHist)
 
 	m := [][]int{}
-	for _, student := range students {
+	for _, student := range unlockedStudents {
 		c := constraintMap[student.ID]
 		h := histMap[student.ID]
-		weights := createWeights(slots, c, h)
+		weights := createWeights(openSlots, c, h)
 		m = append(m, weights)
 	}
 
 	if len(m) != len(m[0]) {
 		c.JSON(http.StatusBadRequest, gin.H{"data": history})
 		return
-	} else {
-		solve, err := hungarianAlgolang.Solve(m)
-		if err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{"data": history})
-			return
-		}
-
-		// create new entries
-		var histUpdates []models.HistoryInput
-		for i, assign := range solve {
-			h := models.HistoryInput{Student_id: students[i].ID, Week: weekInt, Slot: slots[assign].Slot}
-			histUpdates = append(histUpdates, h)
-		}
-
-		// delete old entries for the week involving curr studnets
-		for _, h := range history {
-			for _, stu := range students {
-				if h.Student_id == stu.ID && h.Week == weekInt {
-					models.DB.Delete(&h)
-					break
-				}
-			}
-		}
-
-		// insert new entries
-		for _, input := range histUpdates {
-			hist := models.History{Student_id: input.Student_id, Week: input.Week, Slot: input.Slot}
-			models.DB.Create(&hist)
-		}
-
-		// new simple but inefficient solution - get everything from DB again...
-		var updatedHistory []models.History
-		for _, s := range students {
-			var stuHist []models.History
-			models.DB.Where(map[string]interface{}{"Student_id": s.ID}).Find(&stuHist)
-			for _, h := range stuHist {
-				updatedHistory = append(updatedHistory, h)
-			}
-		}
-
-		dayMap := SortDayMap(CreateDayMap(updatedHistory))
-		sortedHist := ExplodeDayMap(dayMap)
-
-		c.JSON(http.StatusOK, gin.H{"data": sortedHist, "weights": m})
 	}
+
+	solve, err := hungarianAlgolang.Solve(m)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"data": history})
+		return
+	}
+
+	// create new entries
+	var histUpdates []models.HistoryInput
+	for i, assign := range solve {
+		h := models.HistoryInput{Student_id: unlockedStudents[i].ID, Week: weekInt, Slot: openSlots[assign].Slot}
+		histUpdates = append(histUpdates, h)
+	}
+
+	for _, l := range locks {
+		h := models.HistoryInput{Student_id: l.Student_id, Week: l.Week, Slot: l.Slot}
+		histUpdates = append(histUpdates, h)
+	}
+
+	// delete old entries for the week involving curr studnets
+	for _, h := range history {
+		for _, stu := range allStudents {
+			if h.Student_id == stu.ID && h.Week == weekInt {
+				models.DB.Delete(&h)
+				break
+			}
+		}
+	}
+
+	// insert new entries
+	for _, input := range histUpdates {
+		hist := models.History{Student_id: input.Student_id, Week: input.Week, Slot: input.Slot}
+		models.DB.Create(&hist)
+	}
+
+	// new simple but inefficient solution - get everything from DB again...
+	var updatedHistory []models.History
+	for _, s := range allStudents {
+		var stuHist []models.History
+		models.DB.Where(map[string]interface{}{"Student_id": s.ID}).Find(&stuHist)
+		for _, h := range stuHist {
+			updatedHistory = append(updatedHistory, h)
+		}
+	}
+
+	dayMap := SortDayMap(CreateDayMap(updatedHistory))
+	sortedHist := ExplodeDayMap(dayMap)
+
+	c.JSON(http.StatusOK, gin.H{"data": sortedHist, "weights": m})
 }
 
 func reduceHist(h []models.History, w int) []models.History {
