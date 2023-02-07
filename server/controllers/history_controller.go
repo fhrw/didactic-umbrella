@@ -3,7 +3,6 @@ package controllers
 import (
 	"net/http"
 	"sort"
-	"strconv"
 	"strings"
 
 	"github.com/fhrw/timetable-server/models"
@@ -28,8 +27,8 @@ func CreateHistory(c *gin.Context) {
 func DeleteSingleHistory(c *gin.Context) {
 
 	var history models.History
-	target, _ := strconv.Atoi(c.Param("history_id"))
-	if err := models.DB.Where("history_id = ?", target).First(&history).Error; err != nil {
+	target := c.Param("history_id")
+	if err := models.DB.Where("id = ?", target).First(&history).Error; err != nil {
 		c.AbortWithStatusJSON(http.StatusNotFound, gin.H{"error": "record not found"})
 		return
 	}
