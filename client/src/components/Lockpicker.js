@@ -38,6 +38,10 @@ function LockPicker({ dispatch, locks, student_id, loading, hasErrors, ui }) {
     dispatch(fetchAddLock(student_id, week, slot));
   }
 
+  function handleOff(lock) {
+    dispatch(fetchDeleteLock(lock));
+  }
+
   const lockedSlot = locks.find((l) => {
     return l.student_id === student_id;
   });
@@ -59,6 +63,7 @@ function LockPicker({ dispatch, locks, student_id, loading, hasErrors, ui }) {
           </div>
         );
       })}
+      <button onClick={() => handleOff(lockedSlot?.id)}>clear</button>
     </div>
   );
 }
