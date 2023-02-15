@@ -31,6 +31,15 @@ func CalculateTimetable(c *gin.Context) {
 		locks = append(locks, lock)
 	}
 
+	var history []models.History
+	for _, s := range allStudents {
+		var currHistory []models.History
+		models.DB.Where(map[string]interface{}{"Student_id": s.ID}).Find(&currHistory)
+		for _, h := range currHistory {
+			history = append(history, h)
+		}
+	}
+
 	//remove locked slots
 	var openSlots []models.Slot
 	for _, s := range allSlots {
@@ -57,15 +66,6 @@ func CalculateTimetable(c *gin.Context) {
 		}
 		if !found {
 			unlockedStudents = append(unlockedStudents, student)
-		}
-	}
-
-	var history []models.History
-	for _, s := range allStudents {
-		var currHistory []models.History
-		models.DB.Where(map[string]interface{}{"Student_id": s.ID}).Find(&currHistory)
-		for _, h := range currHistory {
-			history = append(history, h)
 		}
 	}
 
