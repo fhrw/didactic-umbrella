@@ -79,7 +79,9 @@ export function fetchDeleteLock(lock_id) {
   return async (dispatch) => {
     dispatch(deleteLock());
     try {
-      const resp = await fetch(`http://localhost:3000/delete-lock/${lock_id}`);
+      const resp = await fetch(`http://localhost:3000/delete-lock/${lock_id}`, {
+        method: "DELETE",
+      });
       const data = await resp.json();
       dispatch(deleteLockSuccess(data.data));
     } catch (error) {
