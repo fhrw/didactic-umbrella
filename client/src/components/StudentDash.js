@@ -52,17 +52,39 @@ function Student(student, constraints, dispatch, setMode, targetFunc) {
     targetFunc(student.id);
   }
 
+  const paddingDims = "px-4";
+  const buttonGeneric = "w-full text-left text-white";
+
   return (
-    <div className="w-full flex justify-between">
-      <div className="flex flex-col items-start">
-        <p>{name}</p>
-        <button onClick={handleDelete}>delete me</button>
-        <button onClick={handleEdit}>edit me</button>
-        <button onClick={handleLock}>lock</button>
+    <div className="flex shadow-md rounded-lg">
+      <div className="w-40 flex flex-col items-start rounded-l-lg shadow-md ">
+        <p
+          className={`w-full font-bold text-neutral-600 bg-neutral-300 ${paddingDims} py-2 rounded-tl-lg`}
+        >
+          {name}
+        </p>
+        <button
+          className={`${paddingDims} ${buttonGeneric} bg-red-400`}
+          onClick={handleDelete}
+        >
+          delete me
+        </button>
+        <button
+          className={`${paddingDims} ${buttonGeneric} bg-blue-400`}
+          onClick={handleEdit}
+        >
+          edit me
+        </button>
+        <button
+          className={`${paddingDims} ${buttonGeneric} bg-amber-400 rounded-bl-lg`}
+          onClick={handleLock}
+        >
+          lock
+        </button>
       </div>
-      <div className="flex flex-wrap gap-x-1 w-3/4">
+      <div className="flex flex-wrap gap-x-1 w-full bg-neutral-200 p-4 rounded-r-lg">
         {constraints.map((c) => (
-          <p>{c.slot}</p>
+          <p className="text-neutral-600">{c.slot}</p>
         ))}
       </div>
     </div>
