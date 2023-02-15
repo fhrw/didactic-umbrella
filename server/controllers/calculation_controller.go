@@ -69,6 +69,12 @@ func CalculateTimetable(c *gin.Context) {
 		}
 	}
 
+	// need to return current hist if all students are locked
+	if len(unlockedStudents) == 0 {
+		c.JSON(200, gin.H{"data": history})
+		return
+	}
+
 	var allConstraints []models.Constraint
 	for _, student := range unlockedStudents {
 		var constraints []models.Constraint
