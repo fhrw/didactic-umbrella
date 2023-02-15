@@ -27,7 +27,7 @@ func CalculateTimetable(c *gin.Context) {
 	var locks []models.Lock
 	for _, student := range allStudents {
 		var lock models.Lock
-		models.DB.Where(map[string]interface{}{"Student_id": student.ID}).Find(&lock)
+		models.DB.Where(map[string]interface{}{"Student_id": student.ID, "Week": week}).Find(&lock)
 		locks = append(locks, lock)
 	}
 
