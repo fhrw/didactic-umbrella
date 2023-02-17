@@ -10,7 +10,11 @@ import { fetchLocks } from "../actions/lockActions";
 //components
 import WeekNav from "./WeekNav";
 import TeacherControls from "./TeacherControls";
-import { ConnectedTimetable, ConnectedNewTimetable } from "./Timetable";
+import {
+  ConnectedTimetable,
+  ConnectedNewTimetable,
+  ConnectedMobileTimetable,
+} from "./Timetable";
 import StudentDash from "./StudentDash";
 import ConstraintPicker from "./ConstraintPicker";
 import TeacherPicker from "./TeacherPicker";
@@ -38,6 +42,7 @@ function Dashboard({ dispatch, ui, teacher }) {
         <div className="flex flex-col items-center gap-y-4 z-20">
           <TeacherControls />
           <ConnectedNewTimetable />
+          {/* <ConnectedMobileTimetable /> */}
           <StudentDash />
           <AddStudent />
         </div>
