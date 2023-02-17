@@ -58,9 +58,9 @@ const AllSlots = [
 
 function NewTimetable({ students, history, ui, loading, hasErrors }) {
   // if (loading.students) return <p>Loading</p>;
-  // if (hasErrors.students) return <p>Error in history data</p>;
+  if (hasErrors.students) return <p>Error in history data</p>;
   // if (loading.history) return <p>Loading data</p>;
-  // if (hasErrors.history) return <p>Error in history data</p>;
+  if (hasErrors.history) return <p>Error in history data</p>;
 
   const allocatedSlots = history.filter((s) => s.week === ui.week);
 
@@ -81,6 +81,11 @@ function NewTimetable({ students, history, ui, loading, hasErrors }) {
       })}
     </div>
   );
+}
+
+function MobileTimetable({ students, history, ui, loading, hasErrors }) {
+  const allocatedSlots = history.filter((s) => s.week === ui.week);
+  return;
 }
 
 function GetAllocatedId(a_slots, t_slot) {
@@ -104,3 +109,5 @@ const mapStateToProps = (state) => ({
 
 export const ConnectedTimetable = connect(mapStateToProps)(Timetable);
 export const ConnectedNewTimetable = connect(mapStateToProps)(NewTimetable);
+export const ConnectedMobileTimetable =
+  connect(mapStateToProps)(MobileTimetable);
