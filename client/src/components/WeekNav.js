@@ -18,7 +18,7 @@ function WeekNav({ dispatch, ui, teacher, loading, hasErrors }) {
     "px-2 py-2 bg-neutral-200 rounded-lg text-neutral-600 shadow-md";
 
   return (
-    <div className="fixed top-0 w-full h-screen flex items-center px-6 pointer-events-none">
+    <div className="fixed top-0 w-[50rem] h-screen flex items-center px-6 pointer-events-none">
       <div className="w-full flex justify-between pointer-events-auto">
         <button className={`${style}`} onClick={handleDec}>
           prev

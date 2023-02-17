@@ -61,7 +61,7 @@ function ConstraintPicker({
 
   return (
     <div className="flex flex-col gap-2 bg-neutral-200 p-4 rounded-lg shadow-md">
-      <h3 className="font-bold text-neutral-600">James' Constraints</h3>
+      <h3 className="font-bold text-neutral-600">So and so's Constraints</h3>
       {generic.map((day) => {
         return (
           <div className="flex justify-between gap-2">
