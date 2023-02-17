@@ -34,7 +34,7 @@ function Dashboard({ dispatch, ui, teacher }) {
 
   return (
     <DashProvider>
-      <div className="h-screen bg-neutral-100 flex items-center justify-center">
+      <div className="min-h-screen bg-neutral-100 flex items-center justify-center">
         <div className="flex flex-col items-center gap-y-4 z-20">
           <TeacherControls />
           <ConnectedNewTimetable />
