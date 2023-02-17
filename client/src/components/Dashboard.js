@@ -44,7 +44,7 @@ function Dashboard({ dispatch, ui, teacher }) {
           <ConnectedNewTimetable />
           {/* <ConnectedMobileTimetable /> */}
           <StudentDash />
-          <AddStudent />
+          {/* <AddStudent /> */}
         </div>
         <WeekNav />
       </div>
