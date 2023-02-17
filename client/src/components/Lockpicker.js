@@ -50,19 +50,31 @@ function LockPicker({ dispatch, locks, student_id, loading, hasErrors, ui }) {
     return l.student_id !== student_id;
   });
 
+  const dims = "px-2 py-1";
+
   return (
-    <div>
+    <div className="flex flex-col gap-1 bg-neutral-200 p-4 rounded-lg shadow-md">
       {generic.map((day) => {
         return (
-          <div>
+          <div className="flex justify-between gap-1">
             {day.map((slot) => {
               const locked = lockedSlot?.slot === slot;
               const elseWhere = checkForSlot(otherLocks, slot);
-              if (locked && !elseWhere) return <button>locked: {slot}</button>;
+              const dayShort = slot.slice(0, 3);
+              const num = slot.slice(slot.length - 1);
+              if (locked && !elseWhere)
+                return (
+                  <button className={`${dims} bg-neutral-300 rounded-lg`}>
+                    {dayShort} {num}
+                  </button>
+                );
               if (elseWhere) return <button>can't pick: {slot}</button>;
               return (
-                <button onClick={() => handleOn(student_id, ui.week, slot)}>
-                  {slot}
+                <button
+                  className={`${dims} rounded-lg`}
+                  onClick={() => handleOn(student_id, ui.week, slot)}
+                >
+                  {dayShort} {num}
                 </button>
               );
             })}

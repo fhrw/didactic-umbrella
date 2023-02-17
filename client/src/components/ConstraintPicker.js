@@ -57,13 +57,14 @@ function ConstraintPicker({
     return c.student_id === student_id;
   });
 
-  const dims = "px-2 py-1";
+  const dims = "px-2 py-1 w-16 h-10";
 
   return (
-    <div className="flex flex-col gap-1 bg-neutral-200 p-4 rounded-lg shadow-md">
+    <div className="flex flex-col gap-2 bg-neutral-200 p-4 rounded-lg shadow-md">
+      <h3 className="font-bold text-neutral-600">James' Constraints</h3>
       {generic.map((day) => {
         return (
-          <div className="flex justify-between gap-1">
+          <div className="flex justify-between gap-2">
             {day.map((slot) => {
               const dayShort = slot.slice(0, 3);
               const num = slot.slice(slot.length - 1);
@@ -71,7 +72,7 @@ function ConstraintPicker({
               if (constrained)
                 return (
                   <button
-                    className={`${dims} bg-neutral-300 rounded-lg`}
+                    className={`${dims} bg-green-400 font-semibold text-neutral-100 rounded-lg shadow-md`}
                     onClick={() => handleOff(constrained.id)}
                   >
                     {dayShort} {num}
@@ -79,7 +80,7 @@ function ConstraintPicker({
                 );
               return (
                 <button
-                  className={`${dims}`}
+                  className={`${dims} bg-neutral-300 text-neutral-600 rounded-md shadow-md`}
                   onClick={() => handleOn(student_id, ui.week, slot)}
                 >
                   {dayShort} {num}
