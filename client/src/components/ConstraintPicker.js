@@ -42,7 +42,7 @@ function ConstraintPicker({
     ["friday 1", "friday 2", "friday 3", "friday 4", "friday 5", "friday 6"],
   ];
 
-  if (loading) return <p>Loading...</p>;
+  // if (loading) return <p>Loading...</p>;
   if (hasErrors) return <p>Error...</p>;
 
   function handleOn(student_id, week, slot) {
@@ -72,7 +72,7 @@ function ConstraintPicker({
               if (constrained)
                 return (
                   <button
-                    className={`${dims} bg-green-400 font-semibold text-neutral-100 rounded-lg shadow-md`}
+                    className={`${dims} bg-green-400 hover:bg-green-500 active:bg-green-300 font-semibold text-neutral-100 rounded-lg shadow-md`}
                     onClick={() => handleOff(constrained.id)}
                   >
                     {dayShort} {num}
@@ -80,7 +80,7 @@ function ConstraintPicker({
                 );
               return (
                 <button
-                  className={`${dims} bg-neutral-300 text-neutral-600 rounded-md shadow-md`}
+                  className={`${dims} bg-neutral-300 hover:bg-slate-300 active:bg-slate-400 text-neutral-600 rounded-md shadow-md`}
                   onClick={() => handleOn(student_id, ui.week, slot)}
                 >
                   {dayShort} {num}
