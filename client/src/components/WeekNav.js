@@ -15,7 +15,7 @@ function WeekNav({ dispatch, ui, teacher, loading, hasErrors }) {
   }
 
   const style =
-    "px-2 py-2 bg-neutral-200 rounded-lg text-neutral-600 shadow-md";
+    "px-2 py-2 bg-neutral-200 hover:bg-slate-200 active:bg-neutral-300 rounded-lg text-neutral-600 shadow-md";
 
   return (
     <div className="fixed top-0 w-[50rem] h-screen flex items-center px-6 pointer-events-none">
