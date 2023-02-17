@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { connect } from "react-redux";
 
 function Timetable({ students, history, ui, loading, hasErrors }) {
@@ -84,8 +85,25 @@ function NewTimetable({ students, history, ui, loading, hasErrors }) {
 }
 
 function MobileTimetable({ students, history, ui, loading, hasErrors }) {
+  const [day, setDay] = useState(0);
   const allocatedSlots = history.filter((s) => s.week === ui.week);
-  return;
+
+  return (
+    <div className="bg-neutral-200 p-4 rounded-lg shadow-md text-neutral-600 flex flex-col">
+      {AllSlots[day].map((s) => {
+        const id = GetAllocatedId(allocatedSlots, s);
+        const name = students.find((s) => s.id === id);
+        const nameOut = name ? name.first_name : "";
+        return (
+          <p>
+            {s.slice(0, 3)} {s.slice(s.length - 1)}: {nameOut}
+          </p>
+        );
+      })}
+      <button onClick={() => setDay(day + 1)}>up</button>
+      <button onClick={() => setDay(day - 1)}>down</button>
+    </div>
+  );
 }
 
 function GetAllocatedId(a_slots, t_slot) {
