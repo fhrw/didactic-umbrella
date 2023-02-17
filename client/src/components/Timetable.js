@@ -65,7 +65,7 @@ function NewTimetable({ students, history, ui, loading, hasErrors }) {
   const allocatedSlots = history.filter((s) => s.week === ui.week);
 
   return (
-    <div className="flex gap-x-2 bg-yellow-400 p-4 text-white rounded-lg shadow-md">
+    <div className="flex gap-x-2 bg-neutral-200 text-neutral-600 p-4 text-white rounded-lg shadow-md">
       {AllSlots.map((d) => {
         return (
           <div>

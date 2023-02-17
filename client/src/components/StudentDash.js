@@ -12,7 +12,7 @@ function StudentDash({ dispatch, students, constraints, locks }) {
   if (students.hasErrors) return <p>Error loading students</p>;
   if (!students.length) return <p>No students to display</p>;
   return (
-    <div className="md:w-1/2 flex flex-col gap-y-4">
+    <div className="flex flex-col gap-y-4">
       {students.map((student) => {
         const stuCons = constraints.filter(
           (constraint) => constraint.student_id === student.id
@@ -82,9 +82,11 @@ function Student(student, constraints, dispatch, setMode, targetFunc) {
           lock
         </button>
       </div>
-      <div className="flex flex-wrap gap-x-1 w-full bg-neutral-200 p-4 rounded-r-lg">
+      <div className="flex flex-wrap items-start  gap-x-1 w-full bg-neutral-200 p-4 rounded-r-lg">
         {constraints.map((c) => (
-          <p className="text-neutral-600">{c.slot}</p>
+          <div className="bg-neutral-300 px-2 py-1 rounded-lg">
+            <p className="text-neutral-600">{c.slot}</p>
+          </div>
         ))}
       </div>
     </div>

@@ -39,7 +39,7 @@ function TeacherControls({ dispatch, teacher, slots, students, ui }) {
   const calcBg = validCalc ? "bg-green-400" : "bg-red-400";
 
   return (
-    <div className="flex flex-col gap-y-4">
+    <div className="flex gap-x-4">
       <div className="flex shadow-md rounded-lg">
         <button
           className="bg-red-400 text-white px-4 py-2 sm:rounded-l-lg"
@@ -48,14 +48,16 @@ function TeacherControls({ dispatch, teacher, slots, students, ui }) {
           Delete Week
         </button>
         <button
-          className="px-4 py-2 bg-green-400 text-white"
+          className="px-4 py-2 bg-green-400 text-white sm:rounded-r-lg"
           onClick={handleAdd}
         >
           Add Week
         </button>
+      </div>
+      <div className="flex shadow-md rounded-lg">
         {ui.week === teacher.term_length ? (
           <button
-            className={`${calcBg} text-white px-4 py-2`}
+            className={`${calcBg} text-white px-4 py-2 sm:rounded-l-lg`}
             onClick={handleCalc}
           >
             Calculate Timetable
