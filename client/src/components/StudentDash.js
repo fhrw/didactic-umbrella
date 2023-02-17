@@ -12,7 +12,7 @@ function StudentDash({ dispatch, students, constraints, locks }) {
   if (students.hasErrors) return <p>Error loading students</p>;
   if (!students.length) return <p>No students to display</p>;
   return (
-    <div className="flex flex-col gap-y-4">
+    <div className="flex flex-col gap-y-4 w-[32rem]">
       {students.map((student) => {
         const stuCons = constraints.filter(
           (constraint) => constraint.student_id === student.id
