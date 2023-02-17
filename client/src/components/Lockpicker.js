@@ -46,6 +46,10 @@ function LockPicker({ dispatch, locks, student_id, loading, hasErrors, ui }) {
     return l.student_id === student_id;
   });
 
+  const otherLocks = locks.filter((l) => {
+    return l.student_id !== student_id;
+  });
+
   return (
     <div>
       {generic.map((day) => {
@@ -53,7 +57,9 @@ function LockPicker({ dispatch, locks, student_id, loading, hasErrors, ui }) {
           <div>
             {day.map((slot) => {
               const locked = lockedSlot?.slot === slot;
-              if (locked) return <button>locked: {slot}</button>;
+              const elseWhere = checkForSlot(otherLocks, slot);
+              if (locked && !elseWhere) return <button>locked: {slot}</button>;
+              if (elseWhere) return <button>can't pick: {slot}</button>;
               return (
                 <button onClick={() => handleOn(student_id, ui.week, slot)}>
                   {slot}
@@ -66,6 +72,13 @@ function LockPicker({ dispatch, locks, student_id, loading, hasErrors, ui }) {
       <button onClick={() => handleOff(lockedSlot?.id)}>clear</button>
     </div>
   );
+}
+
+function checkForSlot(locks, slot) {
+  for (const ele of locks) {
+    if (ele.slot === slot) return true;
+  }
+  return false;
 }
 
 const mapStateToProps = (state) => ({
