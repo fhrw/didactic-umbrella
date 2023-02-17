@@ -52,13 +52,13 @@ function AddStudent({ dispatch, teacher, loading, hasErrors }) {
       </div>
       <div>
         <button
-          className={`${buttStyle} bg-green-400 rounded-l-lg`}
+          className={`${buttStyle} bg-green-400 hover:bg-green-500 active:bg-green-300 rounded-l-lg`}
           onClick={handleSubmit}
         >
           Submit
         </button>
         <button
-          className={`${buttStyle} bg-red-400 rounded-r-lg`}
+          className={`${buttStyle} bg-red-400 hover:bg-red-500 active:bg-red-300 rounded-r-lg`}
           onClick={handleCancel}
         >
           Cancel

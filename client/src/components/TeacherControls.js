@@ -36,19 +36,21 @@ function TeacherControls({ dispatch, teacher, slots, students, ui }) {
   }
 
   const validCalc = slots.length === students.length ? true : false;
-  const calcBg = validCalc ? "bg-green-400" : "bg-red-400";
+  const calcBg = validCalc
+    ? "bg-green-400 hover:bg-green-500 active:bg-green-300"
+    : "bg-red-400 hover:bg-red-500 active:bg-red-300";
 
   return (
     <div className="flex gap-x-4">
       <div className="flex shadow-md rounded-lg">
         <button
-          className="bg-red-400 text-white px-4 py-2 sm:rounded-l-lg"
+          className="bg-red-400 hover:bg-red-500 active:bg-red-300 text-white px-4 py-2 sm:rounded-l-lg"
           onClick={handleDel}
         >
           Delete Week
         </button>
         <button
-          className="px-4 py-2 bg-green-400 text-white sm:rounded-r-lg"
+          className="px-4 py-2 bg-green-400 hover:bg-green-500 active:bg-green-300 text-white sm:rounded-r-lg"
           onClick={handleAdd}
         >
           Add Week
@@ -66,7 +68,7 @@ function TeacherControls({ dispatch, teacher, slots, students, ui }) {
           <p>Not latest week</p>
         )}
         <button
-          className="bg-blue-400 text-white px-4 py-2 sm:rounded-r-lg"
+          className="bg-blue-400 hover:bg-blue-500 active:bg-blue-300 text-white px-4 py-2 sm:rounded-r-lg"
           onClick={handleToggleSlot}
         >
           Edit Slots

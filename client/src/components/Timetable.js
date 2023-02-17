@@ -57,10 +57,10 @@ const AllSlots = [
 ];
 
 function NewTimetable({ students, history, ui, loading, hasErrors }) {
-  if (loading.students) return <p>Loading</p>;
-  if (hasErrors.students) return <p>Error in history data</p>;
-  if (loading.history) return <p>Loading data</p>;
-  if (hasErrors.history) return <p>Error in history data</p>;
+  // if (loading.students) return <p>Loading</p>;
+  // if (hasErrors.students) return <p>Error in history data</p>;
+  // if (loading.history) return <p>Loading data</p>;
+  // if (hasErrors.history) return <p>Error in history data</p>;
 
   const allocatedSlots = history.filter((s) => s.week === ui.week);
 

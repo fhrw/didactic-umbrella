@@ -8,7 +8,7 @@ import LockPicker from "./Lockpicker.js";
 
 function StudentDash({ dispatch, students, constraints, locks }) {
   const viewState = useContext(DashContext);
-  if (students.loading) return <p>Loading students</p>;
+  // if (students.loading) return <p>Loading students</p>;
   if (students.hasErrors) return <p>Error loading students</p>;
   if (!students.length) return <p>No students to display</p>;
   return (
